@@ -11,6 +11,7 @@ node_modules
 dist
 dist-ssr
 *.local
+asteroid_orbit_params_a_e_peri_Q_0au_to_8au.csv
 
 # Editor directories and files
 .vscode/*
