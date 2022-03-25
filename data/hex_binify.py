@@ -3,10 +3,12 @@
 # and calculate the corresponding hex bin values herein
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 
+from operator import itemgetter
 import matplotlib.pyplot as plt
 import pandas as pd
 import math
 from datetime import datetime
+from tqdm import tqdm
 
 # first we populate our dataframe
 path_to_csv = "/Users/colmlang/CS360/final/finalProject/data/asteroid_orbit_params_a_e_peri_Q_0au_to_8au.csv"
@@ -14,11 +16,13 @@ df = pd.read_csv(path_to_csv)
 
 max_aphelion = df['ad'].max()
 
-NUM_ROWS = NUM_COLS = 100
-hexes = {}
-for i in range(NUM_COLS):
-    for j in range(NUM_ROWS):
-        hexes[str(i) + "," + str(j)] = 0
+# init empty hex bins for population in main loop
+hexes = plt.hexbin(
+    [],
+    [],
+    gridsize=100,
+    extent=(0,1000,0,1000)
+)
 
 # returns some scaled x valued based on specified domain and range
 def x_scale(x):
@@ -68,13 +72,20 @@ def get_points_in_ellipse(a, e, w):
         y2 = y1 * -1                        # bottom half
         return [y1] if y1 == y2 else [y1, y2]
 
-    left_bound = (int)(0 - c - a)
-    right_bound = (int)(a - c)
+    left_bound = 0 - c - a
+    right_bound = a - c
+    
+    for y in get_y(left_bound):
+        points.append((left_bound, y))
+    for y in get_y(right_bound):
+        points.append((right_bound, y))
 
-    for x in range(left_bound, right_bound):
+    x = left_bound + 0.01
+    while x < right_bound:
         ys = get_y(x)
         for y in ys:
             points.append((x, y))
+        x += 0.01
 
     # before returning we shall rotate all points then translate the set to the center of the canvas
     def rotate_then_translate(point):
@@ -84,57 +95,44 @@ def get_points_in_ellipse(a, e, w):
 
     return list(map(rotate_then_translate, points))
 
-# returns the hex bin where the point is. 
-def get_hex_by_point(point):
-    px, py = point
-    r = (1000 / NUM_COLS) / 2
-    base_width = 2 * r
-    """
-            2 (60,120)
-    3 (120,180)      1 (0, 60)
-
-    4 (180, 240)     6 (300,360)
-            5 (240,300)
-    """
-
-
 def update_hex_bins_by_points(points):
-    hexbins = plt.hexbin(
-        list(map(lambda p: p[0], points)),  # x
-        list(map(lambda p: p[1], points)),  # y
-        gridsize=(100,100),                 # number of hexes by x and y
-        extent=(0,1000,0,1000)              # extent: (xmin, xmax, ymin, ymax)
+    current_bins = plt.hexbin(
+        list(map(itemgetter(0), points)),     # x
+        list(map(itemgetter(1), points)),     # y
+        gridsize=100,                   # number of hexes x by y
+        extent=(0,1000,0,1000)          # extent (min_w, max_w, min_y, max_y)
     )
-    found_hexes = {}
+    bins_arr = current_bins.get_array()
+    updated_bins = hexes.get_array()
 
-    for point in points:
-        key = get_hex_by_point(point)
-        if found_hexes.get(key) != True:                # if we havent updated this hex yet    
-            found_hexes.update( {key: True} )           # first add it to the set of found hexes to prevent repeats
-            hexes.update( {key: 1 if hexes.get(key) == None else (hexes.get(key) + 1)} )   # increment hex count
-
+    for i in range(len(bins_arr)):
+        updated_bins[i] += 1 if bins_arr[i] > 0 else 0
+    hexes.set_array(updated_bins)
 
 # for each body in the dataset
-print('loading...')
-start = datetime.now()
-all_points = []
-for index, row in df.iterrows():
-    a = (float)(row['a'])
-    e = (float)(row['e'])
-    w = (float)(row['w'])
-    points = get_points_in_ellipse(x_scale(a), e, w)
-    # update_hex_bins_by_points(points)
-    all_points += points
-end = datetime.now()
-print("runtime:")
-print(end - start)
+for index, row in tqdm(df.iterrows(), total=df.shape[0]):
+    points = get_points_in_ellipse(x_scale((float)(row['a'])), (float)(row['e']), (float)(row['w']))
+    update_hex_bins_by_points(points)
 
-# points= [(1,1), (999, 0), (200,100), (500,500), (0, 999), (999,999)]
-hexbins = plt.hexbin(
-    list(map(lambda p: p[0], all_points)),  # x
-    list(map(lambda p: p[1], all_points)),  # y
-    gridsize=100,                           # number of hexes by x and y
-    extent=(0,1000,0,1000)                  # extent: (xmin, xmax, ymin, ymax)
+offsets = hexes.get_offsets()
+count_arr = hexes.get_array()
+hexes = plt.hexbin(
+    offsets[:,0],
+    offsets[:,1],
+    C=count_arr,
+    gridsize=100,
+    extent=(0,1000,0,1000)
 )
 
-plt.show()
+# get concise dict of hex bin data
+hex_data = { 
+    'x': offsets[:,0], 
+    'y': offsets[:,1], 
+    'count': count_arr 
+}
+
+# construct sorted dataframe (by x then by y)
+hex_df = pd.DataFrame(hex_data).sort_values(by=['x', 'y'])
+
+# write to csv with headers and no index
+hex_df.to_csv('hex_bins.csv', header=hex_data.keys(), index=False)
