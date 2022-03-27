@@ -19,7 +19,7 @@ function App() {
 
   useEffect(() => {
 
-    const pathToHexData = 'https://gist.githubusercontent.com/colmpat/6ed9d6eb8bca9d5ce0176556df72fe82/raw/348ea755e192368e1a6ad63c3649fc2a439361b8/hex_bins.csv'
+    const pathToHexData = 'https://gist.githubusercontent.com/colmpat/5a356e5e024c175d52b584ad42d34f29/raw/1846e9bde063af9ad4ec76887e4b2dc4bb055165/hex_bins_125.csv'
     // load in hexbin csv
     d3.csv(pathToHexData, d => {
       return {

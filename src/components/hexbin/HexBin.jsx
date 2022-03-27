@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react'
 import * as d3 from 'd3';
 import './hexBin.scss'
+import styles from '../../global.scss'
 
 export default function HexBin({ data, dimensions }) {
     const svgRef = useRef(null);
@@ -26,10 +27,11 @@ export default function HexBin({ data, dimensions }) {
             .data(data)
             .enter()
             .append('polygon')
+            .attr('class', 'hex')
             .attr('points', d => {
-                // given a radius of 5 pixels, a hexagon can be thought of as a function of its 30 60 90 triangle
-                // if b = 5, then a = b / root3, and c = 2a
-                let b = 5;
+                // given a radius of 4 pixels, a hexagon can be thought of as a function of its 30 60 90 triangle
+                // if b = 4, then a = b / root3, and c = 2a
+                let b = 4;
                 let a = b / Math.sqrt(3);
                 let c = 2 * a;
                 return [
