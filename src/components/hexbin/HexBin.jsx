@@ -34,13 +34,14 @@ export default function HexBin({ data, dimensions }) {
                 let b = 4;
                 let a = b / Math.sqrt(3);
                 let c = 2 * a;
+                let y = height - d.y;
                 return [
-                    { x: d.x + b, y: d.y + a},      // top right
-                    { x: d.x + b, y: d.y - a},      // bottom right
-                    { x: d.x, y: d.y - c},          // bottom center
-                    { x: d.x - b, y: d.y - a},      // bottom left
-                    { x: d.x - b, y: d.y + a},      // top left
-                    { x: d.x, y: d.y + c},          // top center
+                    { x: d.x + b, y: y + a},      // top right
+                    { x: d.x + b, y: y - a},      // bottom right
+                    { x: d.x, y: y - c},          // bottom center
+                    { x: d.x - b, y: y - a},      // bottom left
+                    { x: d.x - b, y: y + a},      // top left
+                    { x: d.x, y: y + c},          // top center
                 ].map(p => `${ p.x }, ${ p.y }`).join(' ')
             })
             .attr('fill', d => colorScale(Math.log(d.count) / Math.log(maxCount)));

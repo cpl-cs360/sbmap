@@ -42,7 +42,7 @@ function App() {
         <h3>Colm Lang</h3>
         <p>Welcome to SBMAP,<br/>I hope this interactive visualization will teach you something about our solar system. It is my goal to bridge the gap between Astrophysicists and <em>the rest of us</em>. You can find the dataset that I used <a href='https://ssd.jpl.nasa.gov/tools/sbdb_query.html'>here</a>.</p>
       </div>
-      <HexBin data={ hexBinData } dimensions={ hexBinDims } />
+      <HexBin data={ hexBinData } dimensions={ hexBinDims } className="hexBin" />
     </>
   )
 }

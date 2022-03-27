@@ -1,4 +1,10 @@
 @import '../../global.scss';
+
+svg {
+    background-color: $main1dp;
+    border-radius: 8px;
+}
+
 .hex {
     stroke: $main1dp;
     stroke-width: 1px;
