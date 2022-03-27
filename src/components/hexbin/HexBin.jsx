@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react'
 import * as d3 from 'd3';
 import './hexBin.scss'
-import styles from '../../global.scss'
+import { GridLoader } from 'react-spinners';
 
 export default function HexBin({ data, dimensions }) {
     const svgRef = useRef(null);
@@ -12,7 +12,10 @@ export default function HexBin({ data, dimensions }) {
     //useEffect to handle D3 related side-effects (like DOM manipulation)
     useEffect(() => {
 
+        // guard for initial render before csv has been parsed
         if(data == null) return;
+
+
         const svgRefElement = d3.select(svgRef.current);
         svgRefElement.selectAll("*").remove()   //clear svg content before (re)drawing
         
@@ -49,6 +52,15 @@ export default function HexBin({ data, dimensions }) {
     }, [data]); //redraw chart when data changes
     
     return (
-        <svg ref={svgRef} width={svgWidth} height={svgHeight} className="hexBin"/>
+            
+        <div className='wrapper'>
+            { data ?
+                <svg ref={svgRef} width={svgWidth} height={svgHeight} className="hexBin"/> :
+                <GridLoader color={'#EEE'} />
+            }
+            
+        </div>
+        
+        
     )
 }

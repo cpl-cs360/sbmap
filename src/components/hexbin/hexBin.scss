@@ -1,11 +1,18 @@
 @import '../../global.scss';
 
-svg {
+
+
+.wrapper {
+    width: 1020px;
+    height: 1020px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: $main1dp;
     border-radius: 8px;
-}
-
-.hex {
-    stroke: $main1dp;
-    stroke-width: 1px;
+    
+    .hex {
+        stroke: $main1dp;
+        stroke-width: 1px;
+    }
 }
