@@ -19,21 +19,20 @@ function App() {
 
   useEffect(() => {
 
+    const pathToHexData = 'https://gist.githubusercontent.com/colmpat/6ed9d6eb8bca9d5ce0176556df72fe82/raw/348ea755e192368e1a6ad63c3649fc2a439361b8/hex_bins.csv'
     // load in hexbin csv
-    d3.csv('../data/hex_bins.csv', d => {
+    d3.csv(pathToHexData, d => {
       return {
         x: +d['x'],
         y: +d['y'],
         count: +d['count'],
       }
     }).then(data => {
-      // console.table(data);
       setHexBinData(data);
     })
   
   }, [])
 
-  console.log(hexBinData)
 
   return (
     <>
