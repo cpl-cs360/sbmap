@@ -23,6 +23,8 @@ $mainBody: 'Libre Franklin', sans-serif;    //Main Body
 html, body {
     background-color: $mainBlack;
     color: $mainWhite;
+    margin: 0;
+    padding: 0;
 
     h1 {
         font-family: $mainHeading;

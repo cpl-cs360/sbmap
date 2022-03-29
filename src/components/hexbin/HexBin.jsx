@@ -54,11 +54,16 @@ export default function HexBin({ data, dimensions }) {
     return (
             
         <div className='wrapper'>
-            { data ?
-                <svg ref={svgRef} width={svgWidth} height={svgHeight} className="hexBin"/> :
-                <GridLoader color={'#EEE'} />
-            }
-            
+            <div className="leftWrapper">
+                <h1>A bird's eye view</h1>
+                <p>To the right you will see the orbital paths of roughly 1.2 million asteroids in our solar system aggregated into hexagonal bins.</p>
+            </div>
+            <div className="svgWrapper">
+                { data ?
+                    <svg ref={svgRef} width={svgWidth} height={svgHeight} id="hexBin"/> :
+                    <GridLoader color={'#EEE'} />
+                }
+            </div>
         </div>
         
         

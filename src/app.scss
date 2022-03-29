@@ -6,7 +6,12 @@
   text-align: left;
   background-color: $mainBlack;
   color: $mainWhite;
-  width: 100vw;
+  scroll-behavior: smooth;
+  scroll-snap-type: y mandatory;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+      display: none;
+  }
 
   h1 {
     margin: 10px 30px;
@@ -21,7 +26,11 @@
     max-width: 900px;
   }
 
-  .hexBin {
-    margin: 10px auto;
+  .sections {
+    > *{
+        scroll-snap-align: start;
+    }
   }
+
 }
+
