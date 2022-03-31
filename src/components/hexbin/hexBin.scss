@@ -1,39 +1,26 @@
 @import '../../global.scss';
 
-.wrapper {
-    margin: 15px;
-    width: calc(100vw - 30px);
-    height: calc(100vh - 30px);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: $main1dp;
-    border-radius: 8px;
-    position: relative;
-    
-    .leftWrapper {
-        margin: 10px 15px auto 15px;
+.hexBin {
+    height: 100vh;
 
-        h1 {
-            margin-left: 0;
-        }
-        p {
-            margin-left: 0;
-        }
-    }
-
-    .svgWrapper {
+    .hexWrapper {
         display: flex;
-        width: 1020px;
-        height: 1020px;
-
-        #hexBin {
-            display: flex;
-            flex-shrink: 1;
-        }
-        .hex {
-            stroke: $main1dp;
-            stroke-width: 1px;
+        margin: 15px !important;
+        width: calc(100vw - 30px);
+        height: calc(100vh - 30px);
+        align-items: center;
+        border-radius: 15px;
+        background-color: $main1dp;
+    
+        .svgWrapper {
+            margin: 0 auto;
+            
+            .hexbin:hover .hex{
+                opacity: 0.3;
+            }
+            .hex:hover {
+                opacity: 1 !important;
+            }
         }
     }
 }
