@@ -16,6 +16,8 @@ import multiprocessing
 import concurrent.futures
 matplotlib.use('agg')
 
+matplotlib.use('agg')   # this fixes the memory leak
+
 # first we populate our dataframe
 path_to_csv = r"C:\Users\Colml\Desktop\final\data\hexbin\asteroid_orbit_params_a_e_peri_Q_0au_to_8au.csv"
 df = pd.read_csv(path_to_csv)
@@ -103,10 +105,10 @@ def get_points_in_ellipse(a, e, w):
 
 def get_hex_bins_by_points(points):
     current_bins = plt.hexbin(
-        list(map(itemgetter(0), points)),     # x
-        list(map(itemgetter(1), points)),     # y
-        gridsize=125,                   # number of hexes x by y
-        extent=(0,1000,0,1000)          # extent (min_w, max_w, min_y, max_y)
+        list(map(itemgetter(0), points)),       # x
+        list(map(itemgetter(1), points)),       # y
+        gridsize=125,                           # number of hexes x by y
+        extent=(0,1000,0,1000)                  # extent (min_w, max_w, min_y, max_y)
     )
     bins_arr = current_bins.get_array()
 
@@ -122,11 +124,11 @@ def get_hex_bins_by_points(points):
 
 # for each body in the dataset
 def compute(i, total):
-    state = {
-        "counts": [0 for _ in range(len(hexes.get_array()))],       # init to zeros
-        "ids": [[] for _ in range(len(hexes.get_array()))],         # init to empty sets
-        "orbits": []
-    }
+    state = [
+        [0 for _ in range(len(hexes.get_array()))],         # COUNT_ARR init to zeros
+        [[] for _ in range(len(hexes.get_array()))],        # IDS_ARR init to empty sets
+        []                                                  # ORBITS_ARR
+    ]
 
     for index, row in tqdm(df.iterrows(), total=df.shape[0]):
         # if not current processor's section, continue
@@ -137,7 +139,7 @@ def compute(i, total):
 
         for j in range(len(set_of_bins)):
             curr = set_of_bins[j]
-            state['counts'][j] += curr
+            state[0][j] += curr                         # counts[j] += curr
 
             if curr == 1 and index % 100 == 0 and len(state['ids'][j]) < 20:     # if this orbit passed through this hex and is a selected orbit and there are less than 25 ids saved
                 state['ids'][j].append(index)                                    # add its id to the set of ids
@@ -182,13 +184,15 @@ if __name__ == '__main__':
         for f in concurrent.futures.as_completed(results):
             resultState = f.result()                                # in the format: { counts, ids, orbits }
             
-            for orbit in resultState['orbits']:                     # update new orbits
-                for key in orbit.keys():
-                    orbit_data[key].append(orbit[key])
+            for orbit in resultState[2]:                            # update new orbits
+                orbit_data['id'].append(orbit[0])
+                orbit_data['a'].append(orbit[1])
+                orbit_data['e'].append(orbit[2])
+                orbit_data['w'].append(orbit[3])
 
-            for i in range(len(resultState['counts'])):
-                aggregate_count_arr[i] += resultState['counts'][i]  # update current bin's count
-                aggregate_id_arr[i] += resultState['ids'][i]        # append the set of intersecting ids to the current bin
+            for i in range(len(resultState[0])):
+                aggregate_count_arr[i] += resultState[0][i]         # update current bin's count
+                aggregate_id_arr[i] += resultState[1][i]            # append the set of intersecting ids to the current bin
 
     offsets = hexes.get_offsets()
     # get concise dict of hex bin data

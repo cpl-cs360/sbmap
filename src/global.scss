@@ -20,11 +20,15 @@ $mainHeading: 'Exo 2', sans-serif;          //Main Heading
 $secondaryHeading: 'Roboto Slab', serif;    //Secondary Heading
 $mainBody: 'Libre Franklin', sans-serif;    //Main Body
 
+* {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
 html, body {
     background-color: $mainBlack;
     color: $mainWhite;
-    margin: 0;
-    padding: 0;
 
     h1 {
         font-family: $mainHeading;
