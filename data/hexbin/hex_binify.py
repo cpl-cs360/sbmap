@@ -3,8 +3,10 @@
 # and calculate the corresponding hex bin values herein
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
 
+import gc
 from multiprocessing.dummy import freeze_support
 from operator import itemgetter
+import matplotlib
 import matplotlib.pyplot as plt
 import pandas as pd
 import math
@@ -12,9 +14,10 @@ import time
 from tqdm import tqdm
 import multiprocessing
 import concurrent.futures
+matplotlib.use('agg')
 
 # first we populate our dataframe
-path_to_csv = "/Users/colmlang/CS360/final/finalProject/data/hexbin/asteroid_orbit_params_a_e_peri_Q_0au_to_8au.csv"
+path_to_csv = r"C:\Users\Colml\Desktop\final\data\hexbin\asteroid_orbit_params_a_e_peri_Q_0au_to_8au.csv"
 df = pd.read_csv(path_to_csv)
 
 max_aphelion = df['ad'].max()
@@ -112,6 +115,9 @@ def get_hex_bins_by_points(points):
             bins_arr[i] = 1
 
     del current_bins    # to prevent memory leak
+    plt.close('all')
+    plt.close()
+    gc.collect()
     return bins_arr
 
 # for each body in the dataset
@@ -133,14 +139,19 @@ def compute(i, total):
             curr = set_of_bins[j]
             state['counts'][j] += curr
 
-            if curr == 1 and index % 1200 == 0:         # if this orbit passed through this hex and is a selected orbit
-                state['ids'][j].append(index)           # add its id to the set of ids
+            if curr == 1 and index % 100 == 0 and len(state['ids'][j]) < 20:     # if this orbit passed through this hex and is a selected orbit and there are less than 25 ids saved
+                state['ids'][j].append(index)                                    # add its id to the set of ids
                 
-        if index % 1200 == 0:                           # this is data sampling so that we only have some orbits, not all 1.2 million
+        if index % 100 == 0:                                                     # this is data sampling so that we only have some orbits, not all 1.2 million
+            a = x_scale((float)(row['a']))
+            e = (float)(row['e'])
+            b = a * math.sqrt(1 - e * e)
             state["orbits"].append({
                 "id": index,
-                "a": x_scale((float)(row['a'])),
-                "e": row['e'],
+                "a": a,
+                "b": b,
+                "c": math.sqrt(a * a - b * b),
+                "e": e,
                 "w": row['w']
             })
 
@@ -150,7 +161,7 @@ def compute(i, total):
 if __name__ == '__main__':
     freeze_support()
 
-    num_cpus = multiprocessing.cpu_count() - 2
+    num_cpus = multiprocessing.cpu_count() - 1
 
     print(f"Starting processing on {num_cpus} cpus")
     start = time.perf_counter()
@@ -160,6 +171,8 @@ if __name__ == '__main__':
     orbit_data = {
         'id': [],
         'a': [],
+        'b': [],
+        'c': [],
         'e': [],
         'w': []
     }
@@ -188,11 +201,11 @@ if __name__ == '__main__':
 
     # construct sorted dataframe (by x then by y)
     hex_df = pd.DataFrame(hex_data).sort_values(by=['x', 'y'])
-    orbits_df = pd.DataFrame(orbit_data)
+    orbits_df = pd.DataFrame(orbit_data).sort_values(by=['id'])
 
     # write to csv with headers and no index
     hex_df.to_csv('./hex_bins_125.csv', header=hex_data.keys(), index=False)
-    orbits_df.to_csv('./orbits_125.csv', header=['id','a','e','w'], index=False)
+    orbits_df.to_csv('./orbits_125.csv', header=orbit_data.keys(), index=False)
 
     end = time.perf_counter()
     print(f"Program completed in {end - start} seconds")
