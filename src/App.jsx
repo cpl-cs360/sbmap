@@ -51,12 +51,11 @@ function App() {
         w: +d['w']
       }
     }).then(data => {
+      console.log('# orbits', data.length)
       setOrbitData(data);
     })
   
   }, [])
-
-  console.log(hexBinData)
 
   return (
     <div className="app">

@@ -1,0 +1,14 @@
+@import "../../global.scss";
+#violinPlot {
+    background-color: $main6dp;
+    border-radius: 10px;
+
+    .band {
+        stroke: $mainWhite;
+        fill: $main24dp;
+    }
+
+    .bar {
+        fill: $mainPurple;
+    }
+}

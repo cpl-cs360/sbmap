@@ -18,7 +18,7 @@ import concurrent.futures
 matplotlib.use('agg')   # this fixes the memory leak
 
 # first we populate our dataframe
-path_to_csv = r"C:\Users\Colml\Desktop\final\data\hexbin\asteroid_orbit_params_a_e_peri_Q_0au_to_8au.csv"
+path_to_csv = "/Users/colmlang/CS360/final/finalProject/data/hexbin/asteroid_orbit_params_a_e_peri_Q_0au_to_8au.csv"
 df = pd.read_csv(path_to_csv)
 
 max_aphelion = df['ad'].max()
@@ -129,7 +129,7 @@ def compute(i, total):
         'orbits': []                                                  # ORBITS_ARR
     }
 
-    for index, row in tqdm(df.head(150).iterrows(), total=df.shape[0]):
+    for index, row in tqdm(df.iterrows(), total=df.shape[0]):
         # if not current processor's section, continue
         if index % total != i:
             continue

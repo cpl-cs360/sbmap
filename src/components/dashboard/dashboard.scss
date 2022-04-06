@@ -3,21 +3,63 @@
 .dashboard {
     display: flex;
     flex-direction: column;
-    width: calc(100vw - 30px);
+    width: calc(90vw - 30px);
+    max-width: 1500px;
     height: calc(100vh - 30px);
-    margin: 15px;
+    margin: 15px auto;
     align-items: center;
     border-radius: 15px;
     background-color: $main1dp;
 
-    .topBar {
+    .topbar {
         width: 100%;
         height: 70px;
         display: flex;
-        justify-content: space-between;
+        justify-content: space-around;
         align-items: center;
+        margin: 20px 0;
+
+        h1 {
+            margin: 0;
+            padding: 0;
+        }
+        .toggles {
+            span {
+                font-size: 18px;
+                margin-right: 1.5em;
+                font-family: $mainHeading;
+            }
+            :last-child {
+                margin: 0;
+            }
+        }
     }
     .top {
+        width: calc(100% - 40px);
+        height: calc(100% - 30px);
+        margin: 0 20px 10px;
+        background-color: $main6dp;
+        border-radius: 10px;
+    }
+    .bottom {
+        width: calc(100% - 40px);
+        height: calc(100% - 30px);
+        margin: 10px 20px 20px;
         display: flex;
+
+        .left {
+            width: calc(50% - 10px);
+            margin: 0;
+            margin-right: 10px;
+            background-color: $main6dp;
+            border-radius: 10px;
+        }
+        .right {
+            width: calc(50% - 10px);
+            margin: 0;
+            margin-left: 10px;
+            background-color: $main6dp;
+            border-radius: 10px;
+        }
     }
 }

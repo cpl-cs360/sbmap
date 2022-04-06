@@ -2,24 +2,44 @@
 
 .hexBin {
     height: 100vh;
+    display: flex;
+    align-items: center;
+
+    .leftWrapper {
+        width: 40vw;
+        height: 100%;
+    }
 
     .hexWrapper {
         display: flex;
-        margin: 15px !important;
-        width: calc(100vw - 30px);
+        margin: 15px;
         height: calc(100vh - 30px);
+        width: calc(100vw - 30px);
         align-items: center;
         border-radius: 15px;
         background-color: $main1dp;
     
         .svgWrapper {
-            margin: 0 auto;
+            height: calc(100vh - 50px);
+            width: calc(100vh - 50px);
+            margin: 10px auto;
             
             .hexbin:hover .hex{
                 opacity: 0.3;
             }
             .hex:hover {
                 opacity: 1 !important;
+                stroke-width: 2px !important;
+            }
+
+            .hexbin {
+                .hex {
+                    stroke: $main1dp;
+                    stroke-width: 1px;
+                    &.lightStroke {
+                        stroke: $mainWhite;
+                    }
+                }
             }
         }
     }
