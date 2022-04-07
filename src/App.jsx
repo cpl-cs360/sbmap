@@ -9,6 +9,8 @@ function App() {
 
   const [hexBinData, setHexBinData] = useState();
   const [orbitData, setOrbitData] = useState();
+  const [dashboardData, setDashboardData] = useState();
+
   const hexBinDims = {
     width: 1000,
     height: 1000,
@@ -22,7 +24,7 @@ function App() {
 
   useEffect(() => {
 
-    const pathToHexData = 'https://gist.githubusercontent.com/colmpat/664cc3da3ee6b99432753ab0d25f1f72/raw/ff877ac39201a3dd7dff5e8673060044577f6b8b/hex_bins_125_max_15.csv';
+    const pathToHexData = 'https://gist.githubusercontent.com/colmpat/c904b44e2b9243c8c77006175a17b70d/raw/7769640a26f587eba49bd08cfd3acb356aac8b98/hex_bins_125_max_20.csv';
     // load in hexbin csv
     d3.csv(pathToHexData, d => {
       let idStr = d['ids'];
@@ -39,7 +41,7 @@ function App() {
       setHexBinData(data);
     })
 
-    const pathToOrbitData = 'https://gist.githubusercontent.com/colmpat/f0f4a7924da4941d8d5a0aed401dcdf3/raw/cedd5c4771df295cd399605d98fdad610e769d32/orbits_125_150.csv';
+    const pathToOrbitData = 'https://gist.githubusercontent.com/colmpat/772ef248351979b9e25253a19ff692a5/raw/99f61ed7adf490a79d62d8fc36aa6f33ed4eb828/orbits_125_sampled.csv';
     //load orbit data
     d3.csv(pathToOrbitData, d => {
       return {
@@ -51,10 +53,19 @@ function App() {
         w: +d['w']
       }
     }).then(data => {
-      console.log('# orbits', data.length)
       setOrbitData(data);
     })
-  
+
+    const pathToDashboardData = '../data/asteroid_a_bins_0.01.csv';
+    d3.csv(pathToDashboardData, d => {
+      return {
+        bin: +d.bin,
+        count: +d.count
+      }
+    }).then(data => {
+      setDashboardData(data);
+    })
+    
   }, [])
 
   return (
@@ -62,7 +73,7 @@ function App() {
       <div className="sections">
         <Intro />
         <HexBin hexData={ hexBinData } orbitData= { orbitData } dimensions={ hexBinDims } />
-        <Dashboard />
+        <Dashboard data={dashboardData} />
       </div>
   </div>
   )

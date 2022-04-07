@@ -1,7 +1,6 @@
 @import "../../global.scss";
 
 .intro {
-
     
     .introWrapper {
         margin: 50px auto 0px;
@@ -16,15 +15,24 @@
         align-items: center;
         justify-content: space-around;
     
-        h1 {
-            margin: 0 0 20px;
-        }
-    
-        h2 {
-            em {
-                color: $mainPurple;
-                text-decoration: underline;
+        div {
+            h1 {
+                margin: 0 0 20px;
             }
+        
+            h2 {
+                em {
+                    font-weight: 800;
+                }
+            }
+    
+            a {
+                margin: 10px 0 15px 0;
+            }
+        }
+
+        >* {
+            margin-left: 0;
         }
     
     }

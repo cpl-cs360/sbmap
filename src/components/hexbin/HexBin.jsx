@@ -69,23 +69,25 @@ export default function HexBin({ hexData, orbitData, dimensions }) {
             .append('ellipse')
             .attr('class', 'orbit')
             .attr('cy', 500)
+            .attr('stroke', '#EEE')
+            .attr('fill', 'none')
+            .style('pointer-events', 'none')
             .attr('cx', d => 500 - d.c)
             .attr('rx', d => d.a)
             .attr('ry', d => d.b)
             .attr('id', d => d.id)
             .attr('transform', d => `rotate(-${d.w} 500 500)`)
-            .attr('stroke', '#EEE')
-            .attr('fill', 'none')
-            .style('pointer-events', 'none')
             .attr('opacity', 0)
-                .transition()
-                .delay(1000)
-                .duration(300)
-                .attr('opacity', 1 / ids.length + (ids.length > 15 ? 0.4 : 0.6));
+            .transition()
+            .delay(1000)
+            .duration(200)
+            .attr('opacity', 1 / ids.length + (ids.length > 15 ? 0.4 : 0.6));
+            
             
             // if less orbits, remove them
             orbits.exit()
             .remove();
+
         }
 
         function hover(elem) {
@@ -100,7 +102,8 @@ export default function HexBin({ hexData, orbitData, dimensions }) {
             // update stroke and make larger
             hex.classed('lightStroke', d => Math.log(d.count) / Math.log(maxCount) < 0.6)
             .transition()
-                .duration(175)
+                .delay(300)
+                .duration(250)
                 .attr('points', d => getHex(d, 10))
                 .transition()
                     .duration(75)

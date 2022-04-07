@@ -12,12 +12,12 @@
     background-color: $main1dp;
 
     .topbar {
-        width: 100%;
+        width: calc(100% - 50px);
         height: 70px;
         display: flex;
-        justify-content: space-around;
+        justify-content: space-between;
         align-items: center;
-        margin: 20px 0;
+        margin: 20px 25px;
 
         h1 {
             margin: 0;
@@ -28,6 +28,7 @@
                 font-size: 18px;
                 margin-right: 1.5em;
                 font-family: $mainHeading;
+                cursor: pointer;
             }
             :last-child {
                 margin: 0;
@@ -40,6 +41,11 @@
         margin: 0 20px 10px;
         background-color: $main6dp;
         border-radius: 10px;
+
+        .distancePlot {
+            height: 100%;
+            width: 100%;
+        }
     }
     .bottom {
         width: calc(100% - 40px);
@@ -62,4 +68,20 @@
             border-radius: 10px;
         }
     }
+}
+
+.hun {
+    fill: $mainPink;
+}
+
+.main {
+    fill: $mainPurple;
+}
+
+.hild {
+    fill: $mainOrange;
+}
+
+.troj {
+    fill: $mainYellow;
 }

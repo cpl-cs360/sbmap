@@ -18,9 +18,11 @@ export default function ViolinPlot({ data, dimensions }) {
         .domain(d3.extent(data.map(d => d.bin)))
         .range([0, width])
 
+        let xAxis = d3.axisBottom(xScale)
+
         let yScale = d3.scaleLinear()
         .domain(d3.extent(data.map(d => d.count)))
-        .range([0, height / 2])
+        .range([0, (height / 2) - 12])
 
         const svg = svgRefElement
         .append("g")
@@ -44,6 +46,10 @@ export default function ViolinPlot({ data, dimensions }) {
         .datum(data)
         .attr('class', 'top band')
         .attr('d', line.y(d => -yScale(d.count)))
+
+        svg.append('g')
+        .attr('transform', `translate(0, ${height - 10})`)
+        .call(xAxis)
 
         // container_g.selectAll('.bottom')
         // .data(data)
