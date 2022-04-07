@@ -17,8 +17,7 @@ export default function Intro() {
   }
 
   useEffect(() => {
-    // const pathToCsv = 'https://gist.githubusercontent.com/colmpat/9c394f0829aabbb69767a4ac0b31b868/raw/82db6cd6fd326a07d51b0528a1e209670d6da870/asteroid_a_bins_01.csv';
-    const pathToCsv = '../../../data/asteroid_a_bins_0.025.csv'
+    const pathToCsv = 'https://gist.githubusercontent.com/colmpat/ee0f174743f100247835465a03b4cd37/raw/837a7db1d4f8c40db229caad4247bdb64c9d204b/asteroid_a_bins_0.025.csv';
     // load in hexbin csv
     d3.csv(pathToCsv, d => {
       return {
@@ -36,7 +35,7 @@ export default function Intro() {
     <div className="intro">
       <div className="introWrapper">
         <div>
-          <a href='/AlphaRelease.pdf'>Alpha Release</a>
+          <a href='/sbmap/AlphaRelease.pdf'>Alpha Release</a>
           <h1>The Small Body Map for the Average Person</h1>
           <h2><em>SBMAP</em>. CS360 Final Project</h2>
           <h3>Colm Lang</h3>
