@@ -7,11 +7,11 @@ export default function Intro() {
   const [data, setData] = useState();
   const violinPlotDimensions = {
     width: 700,
-    height: 500,
+    height: 400,
     margin: {
       top: 10,
       right: 10,
-      bottom: 10,
+      bottom: 30,
       left: 10
     }
   }

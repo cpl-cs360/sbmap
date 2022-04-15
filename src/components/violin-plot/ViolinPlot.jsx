@@ -22,16 +22,18 @@ export default function ViolinPlot({ data, dimensions }) {
 
         let yScale = d3.scaleLinear()
         .domain(d3.extent(data.map(d => d.count)))
-        .range([0, (height / 2) - 12])
+        .range([0, height / 2])
 
         const svg = svgRefElement
         .append("g")
         .attr('class', 'violin')
         .attr("transform", `translate(${margin.left},${margin.top})`);
 
-        let line = d3.line()
+        let line = d3.area()
         .curve(d3.curveBasis)
         .x(d => xScale(d.bin))
+        .y0(d => yScale(d.count))
+        .y1(d => -yScale(d.count))
 
         let container_g = svg.append('g')
         .attr('class', 'violinContainer')
@@ -39,42 +41,71 @@ export default function ViolinPlot({ data, dimensions }) {
         
         container_g.append('path')
         .datum(data)
-        .attr('class', 'bottom band')
-        .attr('d', line.y(d => yScale(d.count)))
-
-        container_g.append('path')
-        .datum(data)
-        .attr('class', 'top band')
-        .attr('d', line.y(d => -yScale(d.count)))
+        .attr('class', 'band')
+        .attr('d',line)
 
         svg.append('g')
-        .attr('transform', `translate(0, ${height - 10})`)
+        .attr('transform', `translate(0, ${height})`)
         .call(xAxis)
 
-        // container_g.selectAll('.bottom')
-        // .data(data)
-        // .enter()
-        // .append('rect')
-        // .attr('class', 'bottom bar')
-        // .attr('x', d => xScale(d.bin))
-        // .attr('y', 0)
-        // .attr('width', width / data.length)
-        // .attr('height', d => yScale(d.count))
+        // sun
+        let sun_g = svg.append('g')
+        .attr('class', 'sun')
+        .attr('transform', `translate(0,${height / 2})`)
 
-        // container_g.selectAll('.top')
-        // .data(data)
-        // .enter()
-        // .append('rect')
-        // .attr('class', 'top bar')
-        // .attr('x', d => xScale(d.bin))
-        // .attr('y', d => 0 - yScale(d.count))
-        // .attr('width', width / data.length)
-        // .attr('height', d => yScale(d.count))
+        sun_g.append('circle')
+        .attr('cx', 0)
+        .attr('cy', 0)
+        .attr('r', 50)
+        
+        sun_g
+        .append('text')
+        .attr('x', 40)
+        .attr('y', -40)
+        .text("Sun")
+        
+        // mars
+        let mars_g = svg.append('g')
+        .attr('class', 'mars')
+        .attr('transform', `translate(${xScale(1.524)},0)`)
+
+        mars_g.append('line')
+        .attr('x1', 0)
+        .attr('y1', 60)
+        .attr('x2', 0)
+        .attr('y2', height - 20)
+
+        mars_g.append('text')
+        .attr('text-anchor', 'middle')
+        .attr('x', 0)
+        .attr('y', 45)
+        .text('Mars')
+
+        // jupiter
+        let jupiter_g = svg.append('g')
+        .attr('class', 'jupiter')
+        .attr('transform', `translate(${xScale(5.2)},0)`)
+
+        jupiter_g.append('line')
+        .attr('x1', 0)
+        .attr('y1', 60)
+        .attr('x2', 0)
+        .attr('y2', height - 20)
+
+        jupiter_g.append('text')
+        .attr('text-anchor', 'middle')
+        .attr('x', 0)
+        .attr('y', 45)
+        .text('Jupiter')
+
+        mars_g.lower()
+        jupiter_g.lower()
+        
 
     }, [data])
     
 
     return (
-        <svg ref={svgRef} width={svgWidth} height={svgHeight} id="violinPlot"/>
+        <svg ref={svgRef} viewBox={`0 0 ${svgWidth} ${svgHeight}`} id="violinPlot"/>
     )
 }

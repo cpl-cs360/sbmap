@@ -4,6 +4,7 @@ import HexBin from './components/hexbin/HexBin';
 import * as d3 from 'd3';
 import Intro from './components/intro/Intro';
 import Dashboard from './components/dashboard/Dashboard';
+import stratify from '../data/dashboard/Stratify';
 
 function App() {
 
@@ -20,6 +21,40 @@ function App() {
       bottom: 10,
       left: 10,
     }
+  };
+
+  const dashboardDims = {
+    a: {
+      w: 1140,
+      h: 410,
+      margin: {
+        top: 10,
+        right: 10,
+        bottom: 30,
+        left: 10,
+      }
+    },
+    d: {
+      w: 550,
+      h: 410,
+      margin: {
+        top: 10,
+        right: 10,
+        bottom: 30,
+        left: 10,
+      }
+    },
+    e: {
+      w: 540,
+      h: 410,
+      margin: {
+        top: 10,
+        right: 10,
+        bottom: 30,
+        left: 30,
+      }
+    }
+    
   };
 
   useEffect(() => {
@@ -56,13 +91,8 @@ function App() {
       setOrbitData(data);
     })
 
-    const pathToDashboardData = '../data/asteroid_a_bins_0.01.csv';
-    d3.csv(pathToDashboardData, d => {
-      return {
-        bin: +d.bin,
-        count: +d.count
-      }
-    }).then(data => {
+    const pathToDashboardData = './data/dashboard/asteroid_a_e_diameter.csv';
+    stratify(pathToDashboardData, 'a', 'e', 'diameter', 100, 30).then(data => {
       setDashboardData(data);
     })
     
@@ -73,7 +103,7 @@ function App() {
       <div className="sections">
         <Intro />
         <HexBin hexData={ hexBinData } orbitData= { orbitData } dimensions={ hexBinDims } />
-        <Dashboard data={dashboardData} />
+        <Dashboard data={ dashboardData } dimensions={ dashboardDims } />
       </div>
   </div>
   )

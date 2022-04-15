@@ -4,7 +4,7 @@
     display: flex;
     flex-direction: column;
     width: calc(90vw - 30px);
-    max-width: 1500px;
+    max-width: 1200px;
     height: calc(100vh - 30px);
     margin: 15px auto;
     align-items: center;
@@ -24,6 +24,7 @@
             padding: 0;
         }
         .toggles {
+            display: flex;
             span {
                 font-size: 18px;
                 margin-right: 1.5em;
@@ -43,9 +44,17 @@
         border-radius: 10px;
 
         .distancePlot {
-            height: 100%;
-            width: 100%;
+            max-height: 100%;
+            max-width: 100%;
+            margin: 0 auto;
+            .line {
+                stroke: $mainWhite;
+                stroke-width: 2px;
+                fill: $mainPurple;
+                fill-opacity: 0.8;
+            }
         }
+
     }
     .bottom {
         width: calc(100% - 40px);
@@ -59,6 +68,17 @@
             margin-right: 10px;
             background-color: $main6dp;
             border-radius: 10px;
+
+            .diameterPlot {
+                max-height: 100%;
+                max-width: 100%;
+                .line {
+                    stroke: $mainWhite;
+                    stroke-width: 2px;
+                    fill: $mainBlue;
+                    fill-opacity: 0.8;
+                }
+            }
         }
         .right {
             width: calc(50% - 10px);
@@ -66,22 +86,51 @@
             margin-left: 10px;
             background-color: $main6dp;
             border-radius: 10px;
+
+            .ePlot {
+                max-height: 100%;
+                max-width: 100%;
+                .eDot {
+                    fill: $mainPurple;
+                    fill-opacity: 0.8;
+                }
+            }
+            
         }
     }
 }
 
-.hun {
+.axis {
+    text {
+        font-family: $mainHeading;
+    }
+
+    path {
+        stroke-width: 2px;
+    }
+
+    .au.label {
+        fill: $mainWhite;
+    }
+}
+
+.pink {
     fill: $mainPink;
+    color: $mainPink;
 }
-
-.main {
-    fill: $mainPurple;
-}
-
-.hild {
+.orange {
     fill: $mainOrange;
+    color: $mainOrange;
 }
-
-.troj {
+.yellow {
     fill: $mainYellow;
+    color: $mainYellow;
+}
+.purple {
+    fill: $mainPurple;
+    color: $mainPurple;
+}
+.default {
+    fill: $mainBlue;
+    color: $mainBlue;
 }

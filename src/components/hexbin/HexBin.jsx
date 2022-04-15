@@ -24,8 +24,8 @@ export default function HexBin({ hexData, orbitData, dimensions }) {
         .append("g")
         .attr('class', 'hexbin')
         .attr("transform", `translate(${margin.left},${margin.top})`);
-        
 
+        
         function getHex(d, r) {
             // given a radius of 4 pixels, a hexagon can be thought of as a function of its 30 60 90 triangle
             // if b = 4, then a = b / root3, and c = 2a
@@ -42,7 +42,7 @@ export default function HexBin({ hexData, orbitData, dimensions }) {
                 { x: d.x, y: y + c},          // top center
             ].map(p => `${ p.x }, ${ p.y }`).join(' ')
         }
-
+        
         svg.selectAll('.hex')
         .data(hexData)
         .enter()
@@ -52,7 +52,7 @@ export default function HexBin({ hexData, orbitData, dimensions }) {
         .attr('fill', d => colorScale(Math.log(d.count) / Math.log(maxCount)))
         .on('mouseover', hover)
         .on('mouseout', exit)
-
+        
         function drawEllipses(ids) {
             let orbits = svg.selectAll('.orbit')
             .data(orbitData.filter(d => {
@@ -63,7 +63,7 @@ export default function HexBin({ hexData, orbitData, dimensions }) {
                 }
                 return false
             }))
-
+            
             // if more orbits to add, append
             orbits.enter()
             .append('ellipse')
@@ -79,23 +79,26 @@ export default function HexBin({ hexData, orbitData, dimensions }) {
             .attr('transform', d => `rotate(-${d.w} 500 500)`)
             .attr('opacity', 0)
             .transition()
-            .delay(1000)
-            .duration(200)
-            .attr('opacity', 1 / ids.length + (ids.length > 15 ? 0.4 : 0.6));
+            .duration(400)
+            .attr('opacity', 1 / ids.length + (ids.length > 15 ? 0.4 : 0.6))
+            .ease(d3.easeBackIn)
             
             
             // if less orbits, remove them
             orbits.exit()
             .remove();
-
+            
         }
-
+        
+        // timer to draw ellipses, cleared when leaving a hex
+        let ellipseTimer;
+        
         function hover(elem) {
             let ids = (d3.select(this).data())[0].ids
-
+            
             // grab hovered hex
             let hex = d3.select(this);
-
+            
             // move to front
             hex.raise();
             
@@ -104,21 +107,19 @@ export default function HexBin({ hexData, orbitData, dimensions }) {
             .transition()
                 .delay(300)
                 .duration(250)
-                .attr('points', d => getHex(d, 10))
-                .transition()
-                    .duration(75)
-                    .attr('points', d => getHex(d, 7))
-                    .transition()
-                        .duration(50)
-                        .attr('points', d => getHex(d, 8))
+                .attr('points', d => getHex(d, 8))
 
             if(ids.length === 0) return;
 
-            drawEllipses(ids);
+            ellipseTimer = setTimeout(function () {
+                drawEllipses(ids);
+            }, 750);
+
         }
         function exit(elem) {
             // clear the ellipses
             drawEllipses([])
+            clearTimeout(ellipseTimer)
 
             // return hex to normal size
             d3.select(this)

@@ -1,10 +1,50 @@
 @import "../../global.scss";
 #violinPlot {
+    text {
+        font-family: $mainHeading;
+        fill: $mainWhite;
+        stroke: none;
+        font-size: 14px;
+    }
     background-color: $main6dp;
     border-radius: 10px;
 
     .band {
         stroke: $mainWhite;
-        fill: rgba($mainPurple, 0.8);
+        fill: $mainPurple;
+        fill-opacity: 0.8;
+    }
+
+    .sun {
+        circle {
+            fill: $mainYellow;
+            stroke: $mainWhite;
+        }
+        text {
+            font-size: 16px;
+        }
+    }
+
+    .mars {
+        line {
+            stroke: $mainRed;
+            stroke-width: 3px;
+            stroke-linecap: round;
+        }
+        text {
+            font-size: 16px;
+        }
+    }
+
+    .jupiter {
+        line {
+            stroke: $mainOrange;
+            stroke-width: 3px;
+            stroke-linecap: round;
+        }
+
+        text {
+            font-size: 16px;
+        }
     }
 }
