@@ -1,7 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import * as d3 from 'd3';
 import './dashboard.scss';
-import { RadioButtonChecked, RadioButtonUnchecked } from '@mui/icons-material';
 import Toggle from './Toggle';
 import Distance from './Distance';
 import Diameter from './Diameter';
@@ -53,11 +52,11 @@ export default function Dashboard({ data, dimensions }) {
                 </div>
             </div>
             <div className="top">
-                <Distance data={data} ids={ids} dimensions={dimensions.a} />
+                <Distance data={data} ids={ids} dimensions={dimensions.a} groups={groups} />
             </div>
             <div className="bottom">
                 <div className="left">
-                    <Diameter data={data} ids={ids} dimensions={dimensions.d} />
+                    <Diameter data={data} ids={ids} dimensions={dimensions.d} groups={groups} />
                 </div>
                 <div className="right">
                     <Eccentricity data={data} ids={ids} dimensions={dimensions.e} groups={groups} />

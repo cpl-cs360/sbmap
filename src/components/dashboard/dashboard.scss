@@ -100,10 +100,12 @@
     }
 }
 
+text {
+    font-family: $mainHeading;
+    fill: $mainWhite;
+}
 .axis {
-    text {
-        font-family: $mainHeading;
-    }
+    
 
     path {
         stroke-width: 2px;

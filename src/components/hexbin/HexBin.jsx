@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from 'react'
 import * as d3 from 'd3';
 import './hexBin.scss'
 import { GridLoader } from 'react-spinners';
+import { SettingsVoice } from '@mui/icons-material';
 
 export default function HexBin({ hexData, orbitData, dimensions }) {
     const svgRef = useRef(null);
@@ -24,7 +25,6 @@ export default function HexBin({ hexData, orbitData, dimensions }) {
         .append("g")
         .attr('class', 'hexbin')
         .attr("transform", `translate(${margin.left},${margin.top})`);
-
         
         function getHex(d, r) {
             // given a radius of 4 pixels, a hexagon can be thought of as a function of its 30 60 90 triangle
@@ -53,6 +53,18 @@ export default function HexBin({ hexData, orbitData, dimensions }) {
         .on('mouseover', hover)
         .on('mouseout', exit)
         
+        svg.selectAll('.tooltip')
+        .data([null])
+        .join('rect')
+        .attr('class', 'tooltip')
+        .attr('opacity', 0)
+        .attr('fill', '#eee')
+        .attr('x', 500)
+        .attr('y', 500)
+        .attr('width', 0)
+        .attr('height', 0)
+        .attr('pointer-events', 'none')
+
         function drawEllipses(ids) {
             let orbits = svg.selectAll('.orbit')
             .data(orbitData.filter(d => {
@@ -101,19 +113,22 @@ export default function HexBin({ hexData, orbitData, dimensions }) {
             
             // move to front
             hex.raise();
-            
+
             // update stroke and make larger
             hex.classed('lightStroke', d => Math.log(d.count) / Math.log(maxCount) < 0.6)
             .transition()
-                .delay(300)
+            .delay(300)
                 .duration(250)
                 .attr('points', d => getHex(d, 8))
+
 
             if(ids.length === 0) return;
 
             ellipseTimer = setTimeout(function () {
                 drawEllipses(ids);
             }, 750);
+
+
 
         }
         function exit(elem) {
@@ -127,6 +142,13 @@ export default function HexBin({ hexData, orbitData, dimensions }) {
             .transition()
             .duration(100)
             .attr('points', d => getHex(d, 4))
+
+            svg.selectAll('.tooltip')
+            .transition()
+            .duration(200)
+            .attr('opacity', 0)
+            .attr('width', 50)
+            .attr('height', 50)
         }
 
     }, [hexData, orbitData]); //redraw chart when data changes

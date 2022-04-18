@@ -26,32 +26,32 @@ function App() {
   const dashboardDims = {
     a: {
       w: 1140,
-      h: 410,
+      h: 390,
       margin: {
         top: 10,
         right: 10,
-        bottom: 30,
+        bottom: 50,
         left: 10,
       }
     },
     d: {
       w: 550,
-      h: 410,
+      h: 390,
       margin: {
         top: 10,
         right: 10,
-        bottom: 30,
+        bottom: 50,
         left: 10,
       }
     },
     e: {
-      w: 540,
-      h: 410,
+      w: 500,
+      h: 390,
       margin: {
         top: 10,
         right: 10,
-        bottom: 30,
-        left: 30,
+        bottom: 50,
+        left: 60,
       }
     }
     
@@ -91,7 +91,7 @@ function App() {
       setOrbitData(data);
     })
 
-    const pathToDashboardData = './data/dashboard/asteroid_a_e_diameter.csv';
+    const pathToDashboardData = 'https://gist.githubusercontent.com/colmpat/d2c7e60946a1ec2931c8e8fcd9a30277/raw/d052fd8bb80d36218cbdfc37b03d309ab6bb476a/dashboard_data.csv';
     stratify(pathToDashboardData, 'a', 'e', 'diameter', 100, 30).then(data => {
       setDashboardData(data);
     })

@@ -14,12 +14,15 @@ export default function Eccentricity({ data, ids, dimensions, groups }) {
 
     let plot = contour()
     .dimensions(dimensions)
+    .xTitle('Orbit Distance (au)')
+    .yTitle('Eccentricty')
 
     const [filteredData, setFilteredData] = useState([])
+    const [prevData, setPrevData] = useState([])
     
     // When filtered data changes, update plot
     useEffect(() => {
-        plot.data(filteredData)
+        plot.data(filteredData).prevData(prevData)
         const svgRefElement = d3.select(ref.current)
         svgRefElement.call(plot)
     }, [filteredData])
@@ -44,6 +47,7 @@ export default function Eccentricity({ data, ids, dimensions, groups }) {
                 y: d.e
             }
         })
+        setPrevData(filteredData)
         setFilteredData(marks)
     }, [data, ids])
     
