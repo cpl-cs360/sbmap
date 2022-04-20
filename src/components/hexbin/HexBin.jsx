@@ -2,7 +2,6 @@ import React, { useRef, useState, useEffect } from 'react'
 import * as d3 from 'd3';
 import './hexBin.scss'
 import { RingLoader } from 'react-spinners';
-import { ChevronLeft, Info } from '@mui/icons-material';
 
 export default function HexBin({ hexData, orbitData, dimensions }) {
     const svgRef = useRef(null);

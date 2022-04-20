@@ -1,5 +1,7 @@
 import './toggle.scss';
-import { CheckBox, CheckBoxOutlineBlank } from "@mui/icons-material";
+import CheckBox from '@mui/icons-material/CheckBox';
+import CheckBoxOutlineBlank from '@mui/icons-material/CheckBoxOutlineBlank';
+
 
 export default function Toggle({ color, name, id, ids, setIds }) {
   return (
