@@ -35,7 +35,6 @@ export default function HexBin({ hexData, orbitData, dimensions }) {
         .cells(8)
         .scale(colorScale)
         .labels(function({i, generatedLabels}) { 
-            if(generatedLabels[i] == 0) return 0;
             return (+generatedLabels[i] > 1000 ? d3.format('.4~s')( Math.exp(+generatedLabels[i])) : d3.format('.2~s')(Math.exp(+generatedLabels[i])))
         })
         
@@ -62,7 +61,7 @@ export default function HexBin({ hexData, orbitData, dimensions }) {
         }
         
         svg.selectAll('.hex')
-        .data(hexData)
+        .data(hexData.filter(d => d.count > 0))
         .enter()
         .append('polygon')
         .attr('class', 'hex')
@@ -254,15 +253,14 @@ export default function HexBin({ hexData, orbitData, dimensions }) {
         
         // timer to draw ellipses, cleared when leaving a hex
         let ellipseTimer;
+        let tooltipTimer;
         
         function hover(elem) {
             let ids = (d3.select(this).data())[0].ids
+            console.log(ids)
             
             // grab hovered hex
             let hex = d3.select(this);
-            
-            let hexData = hex.data()[0]
-            drawTooltip(elem, hexData)
             
             // move to front
             hex.raise();
@@ -277,15 +275,20 @@ export default function HexBin({ hexData, orbitData, dimensions }) {
 
             if(ids.length === 0) return;
 
+            tooltipTimer = setTimeout(function () {
+                let hexData = hex.data()[0]
+                drawTooltip(elem, hexData)
+            }, 500)
             ellipseTimer = setTimeout(function () {
                 drawEllipses(ids);
-            }, 750);
+            }, 1000);
 
         }
         function exit(elem) {
             // clear the ellipses
             drawEllipses([])
             clearTimeout(ellipseTimer)
+            clearTimeout(tooltipTimer)
 
             // return hex to normal size
             d3.select(this)
