@@ -1,101 +1,106 @@
 @import "../../global.scss";
 
 .dashboard {
-    display: flex;
-    flex-direction: column;
-    width: calc(90vw - 30px);
-    max-width: 1200px;
-    height: calc(100vh - 30px);
-    margin: 15px auto;
-    align-items: center;
-    border-radius: 15px;
-    background-color: $main1dp;
+    height: 100vh;
+    width: 100vw;
 
-    .topbar {
-        width: calc(100% - 50px);
-        height: 70px;
+    .dashboardWrapper {
         display: flex;
-        justify-content: space-between;
+        flex-direction: column;
+        width: calc(90vw - 30px);
+        max-width: 1200px;
+        height: calc(100vh - 30px);
+        margin: 15px auto;
         align-items: center;
-        margin: 20px 25px;
-
-        h1 {
-            margin: 0;
-            padding: 0;
-        }
-        .toggles {
+        border-radius: 15px;
+        background-color: $main1dp;
+    
+        .topbar {
+            width: calc(100% - 50px);
+            height: 70px;
             display: flex;
-            span {
-                font-size: 18px;
-                margin-right: 1.5em;
-                font-family: $mainHeading;
-                cursor: pointer;
-            }
-            :last-child {
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px 25px;
+    
+            h1 {
                 margin: 0;
+                padding: 0;
             }
-        }
-    }
-    .top {
-        width: calc(100% - 40px);
-        height: calc(100% - 30px);
-        margin: 0 20px 10px;
-        background-color: $main6dp;
-        border-radius: 10px;
-
-        .distancePlot {
-            max-height: 100%;
-            max-width: 100%;
-            margin: 0 auto;
-            .line {
-                stroke: $mainWhite;
-                stroke-width: 2px;
-                fill: $mainPurple;
-                fill-opacity: 0.8;
-            }
-        }
-
-    }
-    .bottom {
-        width: calc(100% - 40px);
-        height: calc(100% - 30px);
-        margin: 10px 20px 20px;
-        display: flex;
-
-        .left {
-            width: calc(50% - 10px);
-            margin: 0;
-            margin-right: 10px;
-            background-color: $main6dp;
-            border-radius: 10px;
-
-            .diameterPlot {
-                max-height: 100%;
-                max-width: 100%;
-                .line {
-                    stroke: $mainWhite;
-                    stroke-width: 2px;
-                    fill: $mainBlue;
-                    fill-opacity: 0.8;
+            .toggles {
+                display: flex;
+                span {
+                    font-size: 18px;
+                    margin-right: 1.5em;
+                    font-family: $mainHeading;
+                    cursor: pointer;
+                }
+                :last-child {
+                    margin: 0;
                 }
             }
         }
-        .right {
-            width: calc(50% - 10px);
-            margin: 0;
-            margin-left: 10px;
+        .top {
+            width: calc(100% - 40px);
+            height: calc(100% - 30px);
+            margin: 0 20px 10px;
             background-color: $main6dp;
             border-radius: 10px;
-
-            .ePlot {
+    
+            .distancePlot {
                 max-height: 100%;
                 max-width: 100%;
-                .eDot {
+                margin: 0 auto;
+                .line {
+                    stroke: $mainWhite;
+                    stroke-width: 2px;
                     fill: $mainPurple;
                     fill-opacity: 0.8;
                 }
             }
-            
+    
+        }
+        .bottom {
+            width: calc(100% - 40px);
+            height: calc(100% - 30px);
+            margin: 10px 20px 20px;
+            display: flex;
+    
+            .left {
+                width: calc(50% - 10px);
+                margin: 0;
+                margin-right: 10px;
+                background-color: $main6dp;
+                border-radius: 10px;
+    
+                .diameterPlot {
+                    max-height: 100%;
+                    max-width: 100%;
+                    .line {
+                        stroke: $mainWhite;
+                        stroke-width: 2px;
+                        fill: $mainBlue;
+                        fill-opacity: 0.8;
+                    }
+                }
+            }
+            .right {
+                width: calc(50% - 10px);
+                margin: 0;
+                margin-left: 10px;
+                background-color: $main6dp;
+                border-radius: 10px;
+    
+                .ePlot {
+                    max-height: 100%;
+                    max-width: 100%;
+                    .eDot {
+                        fill: $mainPurple;
+                        fill-opacity: 0.8;
+                    }
+                }
+                
+            }
         }
     }
 }

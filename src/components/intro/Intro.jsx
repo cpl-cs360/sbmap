@@ -11,7 +11,7 @@ export default function Intro() {
     margin: {
       top: 10,
       right: 10,
-      bottom: 30,
+      bottom: 60,
       left: 10
     }
   }
@@ -35,7 +35,6 @@ export default function Intro() {
     <div className="intro">
       <div className="introWrapper">
         <div>
-          <a href='/sbmap/AlphaRelease.pdf'>Alpha Release</a>
           <h1>The Small Body Map for the Average Person</h1>
           <h2><em>SBMAP</em>. CS360 Final Project</h2>
           <h3>Colm Lang</h3>

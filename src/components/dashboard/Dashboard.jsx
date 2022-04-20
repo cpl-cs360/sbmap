@@ -37,29 +37,31 @@ export default function Dashboard({ data, dimensions }) {
     const [ids, setIds] = useState(groups.map(g => g.id));
 
     return (
-        <div className="dashboard">
-            <div className="topbar">
-                <h1>The Asteroid Dashboard</h1>
-                <div className="toggles">
-                    {
-                        groups.map(g => {
-                            return (
-                                <Toggle key={g.id} color={g.color} name={g.name} id={g.id} ids={ids} setIds={setIds} />
-                            )
-                        })
-                    }
+        <div className='dashboard'>
+            <div className="dashboardWrapper">
+                <div className="topbar">
+                    <h1>The Asteroid Dashboard</h1>
+                    <div className="toggles">
+                        {
+                            groups.map(g => {
+                                return (
+                                    <Toggle key={g.id} color={g.color} name={g.name} id={g.id} ids={ids} setIds={setIds} />
+                                )
+                            })
+                        }
 
+                    </div>
                 </div>
-            </div>
-            <div className="top">
-                <Distance data={data} ids={ids} dimensions={dimensions.a} groups={groups} />
-            </div>
-            <div className="bottom">
-                <div className="left">
-                    <Diameter data={data} ids={ids} dimensions={dimensions.d} groups={groups} />
+                <div className="top">
+                    <Distance data={data} ids={ids} dimensions={dimensions.a} groups={groups} />
                 </div>
-                <div className="right">
-                    <Eccentricity data={data} ids={ids} dimensions={dimensions.e} groups={groups} />
+                <div className="bottom">
+                    <div className="left">
+                        <Diameter data={data} ids={ids} dimensions={dimensions.d} groups={groups} />
+                    </div>
+                    <div className="right">
+                        <Eccentricity data={data} ids={ids} dimensions={dimensions.e} groups={groups} />
+                    </div>
                 </div>
             </div>
         </div>

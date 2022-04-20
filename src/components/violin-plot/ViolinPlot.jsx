@@ -44,9 +44,16 @@ export default function ViolinPlot({ data, dimensions }) {
         .attr('class', 'band')
         .attr('d',line)
 
-        svg.append('g')
+        let xAxis_g = svg.append('g')
         .attr('transform', `translate(0, ${height})`)
-        .call(xAxis)
+        
+        xAxis_g.call(xAxis)
+        
+        xAxis_g
+        .append('text')
+        .attr('x', width / 2)
+        .attr('y', 45)
+        .text('Orbit Distance (au)')
 
         // sun
         let sun_g = svg.append('g')

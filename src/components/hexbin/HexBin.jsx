@@ -1,12 +1,13 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import * as d3 from 'd3';
 import './hexBin.scss'
-import { GridLoader } from 'react-spinners';
-import { SettingsVoice } from '@mui/icons-material';
+import { RingLoader } from 'react-spinners';
+import { ChevronLeft, Info } from '@mui/icons-material';
 
 export default function HexBin({ hexData, orbitData, dimensions }) {
     const svgRef = useRef(null);
     const { width, height, margin } = dimensions;
+    const [showInfo, setShowInfo] = useState(true);
     
     //useEffect to handle D3 related side-effects (like DOM manipulation)
     useEffect(() => {
@@ -14,7 +15,9 @@ export default function HexBin({ hexData, orbitData, dimensions }) {
         // guard for initial render before csv has been parsed
         if(hexData == null || orbitData == null) return;
 
-        
+        let cw = d3.select('body').node().getBoundingClientRect().width;
+        let ch = d3.select('body').node().getBoundingClientRect().height;
+
         const svgRefElement = d3.select(svgRef.current);
         svgRefElement.selectAll("*").remove()   //clear svg content before (re)drawing
         
@@ -52,18 +55,8 @@ export default function HexBin({ hexData, orbitData, dimensions }) {
         .attr('fill', d => colorScale(Math.log(d.count) / Math.log(maxCount)))
         .on('mouseover', hover)
         .on('mouseout', exit)
-        
-        svg.selectAll('.tooltip')
-        .data([null])
-        .join('rect')
-        .attr('class', 'tooltip')
-        .attr('opacity', 0)
-        .attr('fill', '#eee')
-        .attr('x', 500)
-        .attr('y', 500)
-        .attr('width', 0)
-        .attr('height', 0)
-        .attr('pointer-events', 'none')
+
+        const tooltip = d3.selectAll('#tooltip')
 
         function drawEllipses(ids) {
             let orbits = svg.selectAll('.orbit')
@@ -101,6 +94,146 @@ export default function HexBin({ hexData, orbitData, dimensions }) {
             .remove();
             
         }
+
+        function drawTooltip(elem, hexData) {
+            let x = hexData.x,
+                y = 1000 - hexData.y;
+            let m = (y - 500) / (x - 500);
+            let offset = 20;
+
+            tooltip.classed('hidden', false)
+            let th = tooltip.node().getBoundingClientRect().height;
+
+            tooltip.select('.value')
+            .text(d3.format((hexData.count > 10000 ? '.4' : '.2') + '~s')(hexData.count))
+            
+            tooltip
+            .style('inset',null)
+
+            if(x >= 500) {
+                if(m > 1) {
+                    // bottom right
+                    let overflow = (elem.y + offset + th) > ch
+
+                    tooltip
+                    .style('left', elem.x + (!overflow ? -offset : offset) + 'px')
+
+                    if(!overflow) {
+                        tooltip
+                        .style('top', elem.y + offset + 'px')
+                    } else {
+                        tooltip
+                        .style('bottom', 0)
+                    }
+                } else if(m > 0) {
+                    // right bottom
+                    let overflow = (elem.y - offset + th) > ch
+
+                    tooltip
+                    .style('left', elem.x + offset + 'px')
+
+                    if(!overflow) {
+                        tooltip
+                        .style('top', elem.y - offset + 'px')
+                    } else {
+                        tooltip
+                        .style('bottom', 0)
+                    }
+                } else if(m >= -1) {
+                    // right top
+                    let overflow = (elem.y + offset - th) < 0
+
+                    tooltip
+                    .style('left', elem.x + offset + 'px')
+
+                    if(!overflow) {
+                        tooltip
+                        .style('bottom', ch - elem.y - offset + 'px')
+                    } else {
+                        tooltip
+                        .style('top', 0)
+                    }
+
+                } else {
+                    // top right
+                    let overflow = (elem.y - offset - th) < 0
+
+                    tooltip
+                    .style('left', elem.x + (overflow ? offset : -offset) + 'px')
+                    
+                    if(!overflow) {
+                        tooltip
+                        .style('bottom', ch - elem.y + offset + 'px')
+                    } else {
+                        tooltip
+                        .style('top', 0)
+                    }
+
+                }
+            } else {
+                if(m > 1) {
+                    // top left
+                    let overflow = (elem.y - offset - th) < 0
+
+                    tooltip
+                    .style('right', cw - elem.x + (overflow ? offset : -offset) + 'px')
+                    
+                    if(!overflow) {
+                        tooltip
+                        .style('bottom', ch - elem.y + offset + 'px')
+                    } else {
+                        tooltip
+                        .style('top', 0)
+                    }
+
+                } else if(m > 0) {
+                    // left top
+                    let overflow = (elem.y + offset - th) < 0
+
+                    tooltip
+                    .style('right', cw - elem.x + offset + 'px')
+
+                    if(!overflow) {
+                        tooltip
+                        .style('bottom', ch - elem.y - offset + 'px')
+                    } else {
+                        tooltip
+                        .style('top', 0)
+                    }
+                } else if(m >= -1) {
+                    // left bottom
+                    let overflow = (elem.y - offset + th) > ch
+
+                    tooltip
+                    .style('right', cw - elem.x + offset + 'px')
+
+                    if(!overflow) {
+                        tooltip
+                        .style('top', elem.y - offset + 'px')
+                    } else {
+                        tooltip
+                        .style('bottom', 0)
+                    }
+                } else {
+                    // bottom left
+                    let overflow = (elem.y + offset + th) > ch
+
+                    tooltip
+                    .style('right', cw - elem.x + (!overflow ? -offset : offset) + 'px')
+
+                    if(!overflow) {
+                        tooltip
+                        .style('top', elem.y + offset + 'px')
+                    } else {
+                        tooltip
+                        .style('bottom', 0)
+                    }
+                    
+                }
+            }
+
+            
+        }
         
         // timer to draw ellipses, cleared when leaving a hex
         let ellipseTimer;
@@ -110,6 +243,9 @@ export default function HexBin({ hexData, orbitData, dimensions }) {
             
             // grab hovered hex
             let hex = d3.select(this);
+            
+            let hexData = hex.data()[0]
+            drawTooltip(elem, hexData)
             
             // move to front
             hex.raise();
@@ -128,8 +264,6 @@ export default function HexBin({ hexData, orbitData, dimensions }) {
                 drawEllipses(ids);
             }, 750);
 
-
-
         }
         function exit(elem) {
             // clear the ellipses
@@ -143,12 +277,8 @@ export default function HexBin({ hexData, orbitData, dimensions }) {
             .duration(100)
             .attr('points', d => getHex(d, 4))
 
-            svg.selectAll('.tooltip')
-            .transition()
-            .duration(200)
-            .attr('opacity', 0)
-            .attr('width', 50)
-            .attr('height', 50)
+            tooltip.classed('hidden', true)
+
         }
 
     }, [hexData, orbitData]); //redraw chart when data changes
@@ -156,20 +286,40 @@ export default function HexBin({ hexData, orbitData, dimensions }) {
     return (
         <div className="hexBin">
             <div className="hexWrapper">
-                {/* <div className="leftWrapper">
+                <div className="leftWrapper">
                     <h1>A bird's eye view</h1>
-                    <p>To the right you will see the orbital paths of roughly 1.2 million asteroids in our solar system aggregated into hexagonal bins.</p>
-                </div> */}
-                <div className="svgWrapper" style={{width: ''}}>
+                    <p>
+                        To the right you will see the orbital paths of roughly 1.2 million
+                        asteroids mapped onto hexagonal bins.
+                    </p>
+                    <p>
+                        The vast majority of asteroids lie between Mars and Jupiter in the asteroid belt. 
+                        The asteroid belt likely contains hundreds of thousands more asteroids than currently identified.
+                    </p>
+                    <div className="about">
+                        <h2>About the hexmap:</h2>
+                        <hr />
+                        <h3>Hover</h3>
+                        <p>Hover to see how many orbital paths intersect the current hex.</p>
+                        <h3>Long Hover</h3>
+                        <p>Hold for 1s to reveal the orbital paths.</p>
+                    </div>
+                </div>
+                <div className="svgWrapper">
                     { hexData && orbitData ?
                         <svg 
                             ref={svgRef} 
                             viewBox='0 0 1020 1020'
                             id="hexBin"
                         /> :
-                        <GridLoader color={'#EEE'} />
+                        <RingLoader color={'#EEE'} size={75} css={{minWidth: 100, minHeight: 100}} />
                     }
+                    <div id='tooltip' className='hidden'>
+                        <h1>Asteroids:</h1>
+                        <p className='value'>100</p>
+                    </div>
                 </div>
+                
             </div>
         </div>
     )
