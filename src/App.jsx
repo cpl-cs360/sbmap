@@ -17,7 +17,7 @@ function App() {
     height: 1000,
     margin: {
       top: 10,
-      right: 10,
+      right: 90,
       bottom: 10,
       left: 10,
     }

@@ -1,6 +1,5 @@
 import { useRef, useState, useEffect } from "react";
 import * as d3 from 'd3';
-import { scatterPlot } from "./scatterPlot";
 import { contour } from "./contour";
 
 export default function Eccentricity({ data, ids, dimensions, groups }) {

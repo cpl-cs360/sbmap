@@ -1,12 +1,13 @@
 import React, { useRef, useState, useEffect } from 'react'
 import * as d3 from 'd3';
+import { legendColor } from 'd3-svg-legend';
 import './hexBin.scss'
 import { RingLoader } from 'react-spinners';
+import { color } from 'd3';
 
 export default function HexBin({ hexData, orbitData, dimensions }) {
     const svgRef = useRef(null);
     const { width, height, margin } = dimensions;
-    const [showInfo, setShowInfo] = useState(true);
     
     //useEffect to handle D3 related side-effects (like DOM manipulation)
     useEffect(() => {
@@ -21,12 +22,27 @@ export default function HexBin({ hexData, orbitData, dimensions }) {
         svgRefElement.selectAll("*").remove()   //clear svg content before (re)drawing
         
         const maxCount = d3.max(hexData.map(d => d.count));
-        const colorScale = d3.interpolateInferno;
+        const colorScale = d3.scaleSequential()
+        .interpolator(d3.interpolateInferno)
+        .domain([0, Math.log(maxCount)])
         
         const svg = svgRefElement
         .append("g")
         .attr('class', 'hexbin')
         .attr("transform", `translate(${margin.left},${margin.top})`);
+
+        let colorLegend = legendColor()
+        .cells(8)
+        .scale(colorScale)
+        .labels(function({i, generatedLabels}) { 
+            if(generatedLabels[i] == 0) return 0;
+            return (+generatedLabels[i] > 1000 ? d3.format('.4~s')( Math.exp(+generatedLabels[i])) : d3.format('.2~s')(Math.exp(+generatedLabels[i])))
+        })
+        
+        svg.append('g')
+        .attr("transform", `translate(${width + 15},${0})`)
+        .call(colorLegend)
+
         
         function getHex(d, r) {
             // given a radius of 4 pixels, a hexagon can be thought of as a function of its 30 60 90 triangle
@@ -51,9 +67,11 @@ export default function HexBin({ hexData, orbitData, dimensions }) {
         .append('polygon')
         .attr('class', 'hex')
         .attr('points', d => getHex(d, 4))
-        .attr('fill', d => colorScale(Math.log(d.count) / Math.log(maxCount)))
+        .attr('fill', d => colorScale(Math.log(d.count)))
         .on('mouseover', hover)
         .on('mouseout', exit)
+
+
 
         const tooltip = d3.selectAll('#tooltip')
 
@@ -308,7 +326,7 @@ export default function HexBin({ hexData, orbitData, dimensions }) {
                     { hexData && orbitData ?
                         <svg 
                             ref={svgRef} 
-                            viewBox='0 0 1020 1020'
+                            viewBox={`0 0 ${width + margin.left + margin.right} ${height + margin.bottom + margin.top}`}
                             id="hexBin"
                         /> :
                         <RingLoader color={'#EEE'} size={75} css={{minWidth: 100, minHeight: 100}} />
