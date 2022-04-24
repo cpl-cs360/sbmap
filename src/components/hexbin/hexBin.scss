@@ -92,6 +92,17 @@
                 }
             }
 
+            .planet {
+                &#earth {
+                    stroke: $mainBlue;
+                }
+                &#jupiter {
+                    stroke: $mainOrange;
+                }
+                &#saturn {
+                    stroke: $mainYellow;
+                }
+            }
         }
 
         #tooltip {

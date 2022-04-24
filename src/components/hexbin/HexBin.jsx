@@ -70,7 +70,50 @@ export default function HexBin({ hexData, orbitData, dimensions }) {
         .on('mouseover', hover)
         .on('mouseout', exit)
 
+        let planet_g = svg.selectAll('.planet')
+        .data([
+            {
+                'id': 'earth', 
+                'a': 35.71437892857143, 
+                'e': 0.01671123, 
+                'w': 100.46457166, 
+                'b': 35.70939168862441, 
+                'c': 0.5968312005827371
+            },
+            {
+                'id': 'jupiter', 
+                'a': 185.81739285714283, 
+                'e': 0.04838624, 
+                'w': 34.39644051, 
+                'b': 185.5997449295388, 
+                'c': 8.9910049669602
+            },
+            { 
+                'id': 'saturn', 
+                'a': 340.5955692857143, 
+                'e': 0.05386179, 
+                'w': 49.95424423, 
+                'b': 340.10116083160074, 
+                'c': 18.3450870277976 
+            }
+        ])
+        .enter()
+        .append('g')
 
+        planet_g
+        .enter()
+        .append('ellipse')
+        .attr('class', 'planet')
+        .attr('cy', 500)
+        .attr('fill', 'none')
+        .style('pointer-events', 'none')
+        .attr('stroke-width', '2px')
+        .attr('cx', d => 500 - d.c)
+        .attr('rx', d => d.a)
+        .attr('ry', d => d.b)
+        .attr('id', d => d.id)
+        .attr('transform', d => `rotate(-${d.w} 500 500)`)
+        .attr('opacity', 0)
 
         const tooltip = d3.selectAll('#tooltip')
 
@@ -257,13 +300,16 @@ export default function HexBin({ hexData, orbitData, dimensions }) {
         
         function hover(elem) {
             let ids = (d3.select(this).data())[0].ids
-            console.log(ids)
             
             // grab hovered hex
             let hex = d3.select(this);
+            let planets = d3.selectAll('.planet')
             
             // move to front
+            planets.raise()
             hex.raise();
+
+            planets.attr('opacity', 1)
 
             // update stroke and make larger
             hex.classed('lightStroke', d => Math.log(d.count) / Math.log(maxCount) < 0.6)
@@ -299,6 +345,7 @@ export default function HexBin({ hexData, orbitData, dimensions }) {
 
             tooltip.classed('hidden', true)
 
+            d3.selectAll('.planet').attr('opacity', 0)
         }
 
     }, [hexData, orbitData]); //redraw chart when data changes

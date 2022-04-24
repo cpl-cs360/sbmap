@@ -39,6 +39,49 @@ def x_scale(x):
     # x / max_domain = output / max_range
     return (x * 500) / math.floor(max_aphelion)
 
+# earth = {
+#     "id": 'earth',
+#     "a": x_scale(1.00000261),
+#     'e': 0.01671123,
+#     'w': 100.46457166
+# }
+# earth.update({
+#     "b": earth['a'] * math.sqrt(1 - (earth['e'] * earth['e']))
+# })
+# earth.update({
+#     "c": math.sqrt(earth['a'] * earth['a'] - earth['b'] * earth['b'])
+# })
+
+# jupiter = {
+#     "id": 'jupiter',
+#     "a": x_scale(5.20288700),
+#     'e': 0.04838624,
+#     'w': 34.39644051
+# }
+# jupiter.update({
+#     "b": jupiter['a'] * math.sqrt(1 - (jupiter['e'] * jupiter['e']))
+# })
+# jupiter.update({
+#     "c": math.sqrt(jupiter['a'] * jupiter['a'] - jupiter['b'] * jupiter['b'])
+# })
+
+# saturn = {
+#     "id": 'saturn',
+#     "a": x_scale(9.53667594),
+#     'e': 0.05386179,
+#     'w': 49.95424423
+# }
+# saturn.update({
+#     "b": saturn['a'] * math.sqrt(1 - (saturn['e'] * saturn['e']))
+# })
+# saturn.update({
+#     "c": math.sqrt(saturn['a'] * saturn['a'] - saturn['b'] * saturn['b'])
+# })
+
+# print(earth)
+# print(jupiter)
+# print(saturn)
+
 def rotate(origin, point, angle):
     """
     Rotate a point counterclockwise by a given angle around a given origin.
