@@ -19,7 +19,7 @@ Find the live deployment at [https://cpl-cs360.github.io/sbmap/](https://cpl-cs3
 
 Performance is optimized for Opera and Firefox with resolution higher than 1280x800
 
-![Screen Shot 2022-04-24 at 1.48.27 PM.png](Final%20Project%20Readme%20b865ac4369284249aad6541752829ed0/Screen_Shot_2022-04-24_at_1.48.27_PM.png)
+![Hexbin hero image](./public/hexbin_hero.png)
 
 ## Data-processing
 
