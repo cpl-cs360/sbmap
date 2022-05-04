@@ -16,8 +16,8 @@ export default function CometScrollama({ dimensions }) {
         }
     ]
     const textStates = [
-        'Unlinke the planets in our solar system, Halley\'s Comet (1P/Halley) has a highly eccentric orbit. The nearest point of Helley\s orbit comes between the earth and the sun while its greatest distance distance from the sun reaches beyond Neptune\'s orbit!',
-        'While most of the planets orbit on what is called the elliptic plane, Halley\s orbit lies on a plane that is tilted roughly 18 degrees.',
+        'Unlinke the planets in our solar system, Halley\'s Comet (1P/Halley) has a highly eccentric orbit. The nearest point of Helley\s orbit comes between the earth and the sun while its greatest distance from the sun reaches beyond Neptune\'s orbit!',
+        'While most of the planets orbit on what is called the elliptic plane, Halley\'s orbit lies on a plane that is tilted roughly 18 degrees.',
     ]
     
     const [currentStepIndex, setCurrentStepIndex] = useState(0)

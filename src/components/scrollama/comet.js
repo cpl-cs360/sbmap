@@ -189,6 +189,7 @@ export const comet = () => {
                     .call(initializeSize)
                     .remove()
             )
+            .raise()
         }
 
         const sideView = () => {
@@ -242,6 +243,7 @@ export const comet = () => {
                     .call(initializeSize)
                     .remove()
             )
+            .raise()
 
             g.selectAll('.comet')
             .data([halley])

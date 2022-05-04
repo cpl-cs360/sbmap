@@ -57,6 +57,11 @@
             max-width: 100%;
             max-height: 100%;
         }
+        .orbit, .comet {
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
     }
     
 }

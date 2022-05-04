@@ -46,6 +46,7 @@
             margin: 0 20px 10px;
             background-color: $main6dp;
             border-radius: 10px;
+            overflow: hidden;
     
             .distancePlot {
                 max-height: 100%;
@@ -72,6 +73,7 @@
                 margin-right: 10px;
                 background-color: $main6dp;
                 border-radius: 10px;
+                overflow: hidden;
     
                 .diameterPlot {
                     max-height: 100%;
@@ -90,6 +92,7 @@
                 margin-left: 10px;
                 background-color: $main6dp;
                 border-radius: 10px;
+                overflow: hidden;
     
                 .ePlot {
                     max-height: 100%;
