@@ -80,4 +80,4 @@ xBins.forEach(function (xBin) {
 return sample;
 ```
 
-By binning the data based on one varibale, I group the points into similar groups or strata. I repeat this process within these stratas two more times making groups of very like data points in all three dimensions. I visualized this as slicing a mountain range by x, then by y, then by z. One can see how the data points within the resulting slices will be very similar to each other in all dimensions. I then took 1 in every 14 points from these stratas to produce a sample size of 1/14th the original (resulting in a sample of around 10K data points).
+By binning the data based on one variable, I group the points into similar groups or strata. I repeat this process within these stratas two more times making groups of very like data points in all three dimensions. I visualized this as slicing a mountain range by x, then by y, then by z. One can see how the data points within the resulting slices will be very similar to each other in all dimensions. I then took 1 in every 14 points from these stratas to produce a sample size of 1/14th the original (resulting in a sample of around 10K data points).
