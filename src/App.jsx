@@ -5,6 +5,7 @@ import * as d3 from 'd3';
 import Intro from './components/intro/Intro';
 import Dashboard from './components/dashboard/Dashboard';
 import stratify from '../data/dashboard/Stratify';
+import CometScrollama from './components/scrollama/CometScrollama';
 
 function App() {
 
@@ -57,6 +58,18 @@ function App() {
     
   };
 
+  const scrollamaDims = {
+    w: 600,
+    h: 400,
+    margin: {
+      top: 10,
+      right: 10,
+      bottom: 10,
+      left: 10,
+    }
+  };
+  
+
   useEffect(() => {
 
     const pathToHexData = 'https://gist.githubusercontent.com/colmpat/c904b44e2b9243c8c77006175a17b70d/raw/7769640a26f587eba49bd08cfd3acb356aac8b98/hex_bins_125_max_20.csv';
@@ -104,6 +117,7 @@ function App() {
         <Intro />
         <HexBin hexData={ hexBinData } orbitData= { orbitData } dimensions={ hexBinDims } />
         <Dashboard data={ dashboardData } dimensions={ dashboardDims } />
+        <CometScrollama dimensions={ scrollamaDims }/>
       </div>
   </div>
   )

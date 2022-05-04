@@ -70,7 +70,7 @@ export default function HexBin({ hexData, orbitData, dimensions }) {
         .on('mouseover', hover)
         .on('mouseout', exit)
 
-        let planet_g = svg.selectAll('.planet')
+        svg.selectAll('.planet')
         .data([
             {
                 'id': 'earth', 
@@ -97,10 +97,6 @@ export default function HexBin({ hexData, orbitData, dimensions }) {
                 'c': 18.3450870277976 
             }
         ])
-        .enter()
-        .append('g')
-
-        planet_g
         .enter()
         .append('ellipse')
         .attr('class', 'planet')

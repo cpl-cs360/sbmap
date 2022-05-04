@@ -49,7 +49,7 @@ for body in dataset:
 
 ### The Dashboard
 
-Due to the sheer size of the dataset, some sort of aggregation had to be done to allow for fast interaction in the dashboard. The dataset started at 140K datapoints but I needed a sample population that was representative in three dimensions: orbit distance, diameter, and orbit eccentricity. My solution resembles some sort of [multivariate stratified sampling](https://en.wikipedia.org/wiki/Stratified_sampling). Below is a simple demonstration of this sampling, you can find the full source code [here](https://github.com/cpl-cs360/sbmap/blob/main/data/dashboard/Stratify.js).
+Due to the sheer size of the dataset, some sort of aggregation had to be done to allow for fast interaction in the dashboard. The dataset started at 140K datapoints but I needed a sample population that was representative in three dimensions: orbit distance, diameter, and orbit eccentricity. My solution resembles some sort of multivariate [stratified sampling](https://en.wikipedia.org/wiki/Stratified_sampling). Below is a simple demonstration of this sampling, you can find the full source code [here](https://github.com/cpl-cs360/sbmap/blob/main/data/dashboard/Stratify.js).
 
 ```javascript
 let sample = [],

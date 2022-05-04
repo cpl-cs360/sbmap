@@ -1,0 +1,87 @@
+@import '../../global.scss';
+
+.graphicContainer {
+    height: calc(100% - 40px);
+    margin: 20px;
+    background-color: $main1dp;
+    border-radius: 16px;
+    display: flex;
+    position: relative;
+    
+    .scrollWrapper {
+        z-index: 2;
+        width: 100%;
+        .scroller {
+            margin: 0 auto;
+            border-radius: 10px;
+            max-width: 800px;
+
+            .step {
+                background-color: $main8dp;
+                margin: 40vh 0;
+                padding: 10px;
+                border-radius: 10px;
+                opacity: 0.5;
+                transition: all 0.6s ease;
+
+                p {
+                    line-height: 1.8em;
+                }
+
+                &.active {
+                    background-color: rgba($main24dp, 0.9);
+                    opacity: 1;
+                }
+                &:first-child {
+                    margin-top: 70vh;
+                }
+                &:last-child {
+                    margin-bottom: 70vh;
+                }
+            }
+        }
+    }
+    .graphic {
+        z-index: 1;
+        border-radius: 30px;
+        background-color: $main4dp;
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        top: 10%;
+        height: 80%;
+        left: 10%;
+        width: 80%;
+        .figure {
+            max-width: 100%;
+            max-height: 100%;
+        }
+    }
+    
+}
+
+.sun {
+    fill: $mainYellow;
+}
+.earth {
+    stroke: $mainBlue;
+}
+.mars {
+    stroke: $mainRed;
+}
+.jupiter {
+    stroke: $mainOrange;
+} 
+.saturn {
+    stroke: $mainYellow;
+}
+.uranus {
+    stroke: rgba($mainBlue, 0.8)
+}
+.neptune {
+    stroke: $mainBlue;
+}
+.comet {
+    stroke: $mainLightBlue;
+}
