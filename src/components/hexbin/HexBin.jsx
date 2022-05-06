@@ -3,7 +3,6 @@ import * as d3 from 'd3';
 import { legendColor } from 'd3-svg-legend';
 import './hexBin.scss'
 import { RingLoader } from 'react-spinners';
-import { color } from 'd3';
 
 export default function HexBin({ hexData, orbitData, dimensions }) {
     const svgRef = useRef(null);
@@ -22,6 +21,7 @@ export default function HexBin({ hexData, orbitData, dimensions }) {
         svgRefElement.selectAll("*").remove()   //clear svg content before (re)drawing
         
         const maxCount = d3.max(hexData.map(d => d.count));
+
         const colorScale = d3.scaleSequential()
         .interpolator(d3.interpolateInferno)
         .domain([0, Math.log(maxCount)])
@@ -70,7 +70,7 @@ export default function HexBin({ hexData, orbitData, dimensions }) {
         .on('mouseover', hover)
         .on('mouseout', exit)
 
-        svg.selectAll('.planet')
+        let planets = svg.selectAll('.planet')
         .data([
             {
                 'id': 'earth', 
@@ -97,6 +97,8 @@ export default function HexBin({ hexData, orbitData, dimensions }) {
                 'c': 18.3450870277976 
             }
         ])
+
+        planets
         .enter()
         .append('ellipse')
         .attr('class', 'planet')
@@ -110,6 +112,19 @@ export default function HexBin({ hexData, orbitData, dimensions }) {
         .attr('id', d => d.id)
         .attr('transform', d => `rotate(-${d.w} 500 500)`)
         .attr('opacity', 0)
+
+        planets
+        .enter()
+        .append('text')
+        .attr('class', 'planet')
+        .attr('x', 500)
+        .attr('y', (d, i) => 500 - d.a - ((2 - i) * 5))
+        .attr('id', d => d.id)
+        .text(d => d.id)
+        .attr('opacity', 0)
+        .attr('text-anchor', 'middle')
+        .style('pointer-events', 'none')
+        .attr('stroke-width', 0)
 
         const tooltip = d3.selectAll('#tooltip')
 

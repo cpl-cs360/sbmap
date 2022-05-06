@@ -103,6 +103,21 @@
                     stroke: $mainYellow;
                 }
             }
+
+            text {
+                font-size: 20px;
+                font-weight: 500;
+                text-transform: capitalize;
+                &#earth {
+                    fill: $mainBlue;
+                }
+                &#jupiter {
+                    fill: $mainOrange;
+                }
+                &#saturn {
+                    fill: $mainYellow;
+                }
+            }
         }
 
         #tooltip {
