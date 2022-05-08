@@ -1,36 +1,7 @@
-import { useState, useEffect } from 'react';
-import * as d3 from 'd3';
 import './intro.scss';
 import ArrowDownwardRoundedIcon from '@mui/icons-material/ArrowDownwardRounded';
 
 export default function Intro() {
-  const [data, setData] = useState();
-  const violinPlotDimensions = {
-    width: 700,
-    height: 400,
-    margin: {
-      top: 10,
-      right: 10,
-      bottom: 60,
-      left: 10
-    }
-  }
-
-  useEffect(() => {
-    const pathToCsv = 'https://gist.githubusercontent.com/colmpat/ee0f174743f100247835465a03b4cd37/raw/837a7db1d4f8c40db229caad4247bdb64c9d204b/asteroid_a_bins_0.025.csv';
-    // load in hexbin csv
-    d3.csv(pathToCsv, d => {
-      return {
-        bin: +d['bin'],
-        count: +d['count']
-      }
-    }).then(data => {
-      setData(data);
-    })
-
-  }, [])
-  
-
   return (
     <div className="intro">
       <div className="introWrapper">
@@ -44,8 +15,6 @@ export default function Intro() {
           <p>To see the methodology, please reference <a href="https://github.com/cpl-cs360/sbmap#sbmap" target='_blank'>the docs</a>.</p>
           <p><u>Note:</u> Best viewed on Opera or Firefox with resolution higher than 1280x800. You can find the dataset that I used <a href='https://ssd.jpl.nasa.gov/tools/sbdb_query.html' target='_blank'>here</a>.</p>
         </div>
-        
-        {/* <ViolinPlot data={data} dimensions={violinPlotDimensions} /> */}
       </div>
       <div className='arrow'>
         <ArrowDownwardRoundedIcon className='arrowIcon'/>

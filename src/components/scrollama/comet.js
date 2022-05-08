@@ -3,6 +3,8 @@ import * as d3 from 'd3'
 export const comet = () => {
     let view,
         dimensions;
+        // basemapJSON,
+        // streetsJSON;
 
     const my = (selection) => {
         const { w, h, margin } = dimensions;
@@ -274,9 +276,72 @@ export const comet = () => {
             )
         }
 
+        // const sizeView = () => {
+
+        //     // SF BASEMAP AND STREETS THANKS TO SOPHIE ENGLE'S VIZHUB PROJECT HERE https://vizhub.com/sjengle/ddee531e7a414d97a059d751507e0f41
+        //     const g = {
+        //         basemap: selection
+        //             .selectAll("g#basemap")
+        //             .data([null])
+        //             .join('g')
+        //             .attr('id','basemap'),
+        //         streets: selection
+        //             .selectAll("g#streets")
+        //             .data([null])
+        //             .join('g')
+        //             .attr('id','streets'),
+        //       };
+
+        //     const projection = d3.geoConicEqualArea();
+        //     projection.parallels([37.692514, 37.840699]);
+        //     projection.rotate([122, 0]);
+
+        //     const path = d3.geoPath().projection(projection);
+
+        //     // makes sure to adjust projection to fit all of our regions
+        //     projection.fitSize([960, 600], basemapJSON);
+              
+        //     // draw the land and neighborhood outlines
+        //     drawBasemap(basemapJSON);
+        //     drawStreets(streetsJSON);
+
+        //       function drawBasemap(json) {
+        //         console.log("basemap", json);
+              
+        //         const basemap = g.basemap.selectAll("path.land")
+        //           .data(json.features)
+        //           .enter()
+        //           .append("path")
+        //           .attr("class", "land")
+        //           .attr("d", path)
+        //           .attr('fill', 'red')
+              
+        //       }
+
+        //     function drawStreets(json) {
+        //       console.log("streets", json);
+            
+        //       // only show active streets
+        //       const streets = json.features.filter(function(d) {
+        //         return d.properties.active;
+        //       });
+            
+        //       console.log("removed", json.features.length - streets.length, "inactive streets");
+            
+        //       g.streets.selectAll("path.street")
+        //         .data(streets)
+        //         .enter()
+        //         .append("path")
+        //         .attr("d", path)
+        //         .attr("class", "street");
+        //     }
+
+        // }
+
         const views = {
             'above': birdsEyeView, 
             'side': sideView,
+            // 'size': sizeView,
         }
         views[view] && views[view]()
     }
@@ -287,6 +352,12 @@ export const comet = () => {
     my.dimensions = function (_) {
         return arguments.length ? (dimensions = _, my) : dimensions;
     }
+    // my.basemapJSON = function (_) {
+    //     return arguments.length ? (basemapJSON = _, my) : basemapJSON;
+    // }
+    // my.streetsJSON = function (_) {
+    //     return arguments.length ? (streetsJSON = _, my) : streetsJSON;
+    // }
 
     return my;
 }

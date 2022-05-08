@@ -3,16 +3,28 @@ import './app.scss'
 import HexBin from './components/hexbin/HexBin';
 import * as d3 from 'd3';
 import Intro from './components/intro/Intro';
+import ViolinPlot from './components/violin-plot/ViolinPlot';
 import Dashboard from './components/dashboard/Dashboard';
 import stratify from '../data/dashboard/Stratify';
 import CometScrollama from './components/scrollama/CometScrollama';
 
 function App() {
-
+  
+  const [violinData, setViolinData] = useState()
   const [hexBinData, setHexBinData] = useState();
   const [orbitData, setOrbitData] = useState();
   const [dashboardData, setDashboardData] = useState();
-
+  
+  const violinPlotDims = {
+    width: 700,
+    height: 400,
+    margin: {
+      top: 10,
+      right: 10,
+      bottom: 60,
+      left: 10
+    }
+  }
   const hexBinDims = {
     width: 1000,
     height: 1000,
@@ -107,7 +119,19 @@ function App() {
     const pathToDashboardData = 'https://gist.githubusercontent.com/colmpat/d2c7e60946a1ec2931c8e8fcd9a30277/raw/d052fd8bb80d36218cbdfc37b03d309ab6bb476a/dashboard_data.csv';
     stratify(pathToDashboardData, 'a', 'e', 'diameter', 100, 30).then(data => {
       setDashboardData(data);
+      setViolinData(data.map(d => d.a))
     })
+
+    // const pathToViolinData = 'https://gist.githubusercontent.com/colmpat/ee0f174743f100247835465a03b4cd37/raw/837a7db1d4f8c40db229caad4247bdb64c9d204b/asteroid_a_bins_0.025.csv';
+    // // load in hexbin csv
+    // d3.csv(pathToCsv, d => {
+    //   return {
+    //     bin: +d['bin'],
+    //     count: +d['count']
+    //   }
+    // }).then(data => {
+    //   setData(data);
+    // })
     
   }, [])
 
@@ -115,6 +139,7 @@ function App() {
     <div className="app">
       <div className="sections">
         <Intro />
+        <ViolinPlot data={ violinData } dimensions={ violinPlotDims }/>
         <HexBin hexData={ hexBinData } orbitData= { orbitData } dimensions={ hexBinDims } />
         <Dashboard data={ dashboardData } dimensions={ dashboardDims } />
         <CometScrollama dimensions={ scrollamaDims }/>

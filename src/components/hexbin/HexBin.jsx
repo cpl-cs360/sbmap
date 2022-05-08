@@ -368,7 +368,7 @@ export default function HexBin({ hexData, orbitData, dimensions }) {
                     <h1>A bird's eye view</h1>
                     <p>
                         To the right you will see the orbital paths of roughly 1.2 million
-                        asteroids mapped onto hexagonal bins.
+                        asteroids mapped onto hexagonal bins. These paths are shown from above the ecliptic plane (the plane containing Earth's orbit).
                     </p>
                     <p>
                         The vast majority of asteroids lie between Mars and Jupiter in the asteroid belt. 
