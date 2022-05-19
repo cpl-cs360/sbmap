@@ -1,4 +1,5 @@
-# sbmap
+<div align='center'><img src='./public/sbmap_icon.png' alt='icon' width=100/></div>
+<h1 align='center'>sbmap</h1>
 
 The comprehensive Small Body Map for the Average Person (SBMAP), aims to provide a digestible, holistic representation of our solar system's many small bodies without sacrificing detail or accuracy.
 
