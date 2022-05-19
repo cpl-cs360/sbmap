@@ -24,5 +24,5 @@ Performance is optimized for Opera and Firefox with resolution higher than 1280x
 
 ## User Manual
 
-*Please note that for the best experience, I highly suggest using [Opera](https://www.opera.com/download).*
+>Please note that for the best experience, I highly suggest using **[Opera](https://www.opera.com/download)**.
 
