@@ -30,8 +30,7 @@ export default function Dashboard({ data, dimensions }) {
             thresholds: [5.05, 5.4]
         }
     ].map(g => {
-        g.id = g.name.toLowerCase().slice(0,4)
-        return g
+        return { ...g, id: g.name.toLowerCase().slice(0,4) }
     })
 
     const [ids, setIds] = useState(groups.map(g => g.id));

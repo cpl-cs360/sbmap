@@ -34,7 +34,7 @@ export default function HexBin({ hexData, orbitData, dimensions }) {
         let colorLegend = legendColor()
         .cells(8)
         .scale(colorScale)
-        .labels(function({i, generatedLabels}) { 
+        .labels(function({ i, generatedLabels }) { 
             return (+generatedLabels[i] > 1000 ? d3.format('.4~s')( Math.exp(+generatedLabels[i])) : d3.format('.2~s')(Math.exp(+generatedLabels[i])))
         })
         

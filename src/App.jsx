@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useReducer } from 'react';
 import './app.scss'
 import HexBin from './components/hexbin/HexBin';
 import * as d3 from 'd3';
@@ -9,11 +9,20 @@ import stratify from '../data/dashboard/Stratify';
 import CometScrollama from './components/scrollama/CometScrollama';
 
 function App() {
-  
-  const [violinData, setViolinData] = useState()
-  const [hexBinData, setHexBinData] = useState();
-  const [orbitData, setOrbitData] = useState();
-  const [dashboardData, setDashboardData] = useState();
+
+  const dataReducer = (state, action) => {
+    return {...state, [action.type]: action.payload }
+  }
+
+  const [data, dispatch] = useReducer(
+    dataReducer,
+    {
+      violin: null,
+      hexbin: null,
+      orbit: null,
+      dashboard: null
+    }
+  )
   
   const violinPlotDims = {
     width: 700,
@@ -98,7 +107,7 @@ function App() {
         ids: idArr
       }
     }).then(data => {
-      setHexBinData(data);
+      dispatch({ type: 'hexbin', payload: data })
     })
 
     const pathToOrbitData = 'https://gist.githubusercontent.com/colmpat/772ef248351979b9e25253a19ff692a5/raw/99f61ed7adf490a79d62d8fc36aa6f33ed4eb828/orbits_125_sampled.csv';
@@ -113,25 +122,14 @@ function App() {
         w: +d['w']
       }
     }).then(data => {
-      setOrbitData(data);
+      dispatch({ type: 'orbit', payload: data })
     })
 
     const pathToDashboardData = 'https://gist.githubusercontent.com/colmpat/d2c7e60946a1ec2931c8e8fcd9a30277/raw/d052fd8bb80d36218cbdfc37b03d309ab6bb476a/dashboard_data.csv';
     stratify(pathToDashboardData, 'a', 'e', 'diameter', 100, 30).then(data => {
-      setDashboardData(data);
-      setViolinData(data.map(d => d.a))
+      dispatch({ type: 'dashboard', payload: data })
+      dispatch({ type: 'violin', payload: data.map(d => d.a) })
     })
-
-    // const pathToViolinData = 'https://gist.githubusercontent.com/colmpat/ee0f174743f100247835465a03b4cd37/raw/837a7db1d4f8c40db229caad4247bdb64c9d204b/asteroid_a_bins_0.025.csv';
-    // // load in hexbin csv
-    // d3.csv(pathToCsv, d => {
-    //   return {
-    //     bin: +d['bin'],
-    //     count: +d['count']
-    //   }
-    // }).then(data => {
-    //   setData(data);
-    // })
     
   }, [])
 
@@ -139,9 +137,9 @@ function App() {
     <div className="app">
       <div className="sections">
         <Intro />
-        <ViolinPlot data={ violinData } dimensions={ violinPlotDims }/>
-        <HexBin hexData={ hexBinData } orbitData= { orbitData } dimensions={ hexBinDims } />
-        <Dashboard data={ dashboardData } dimensions={ dashboardDims } />
+        <ViolinPlot data={ data.violin } dimensions={ violinPlotDims }/>
+        <HexBin hexData={ data.hexbin } orbitData= { data.orbit } dimensions={ hexBinDims } />
+        <Dashboard data={ data.dashboard } dimensions={ dashboardDims } />
         <CometScrollama dimensions={ scrollamaDims }/>
       </div>
   </div>
