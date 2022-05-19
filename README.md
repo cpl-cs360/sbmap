@@ -29,14 +29,14 @@ Hover for `0.5s` to reveal **the number** of asteroids that intersect the curren
 
 Hover for `1s` to reveal **the orbital paths** of asteroids that intersect the current hex.
 
-<img alt='Hexbin Hover Demo' src='./public/hexbin_hover_demo.gif' width=300/>
+<img alt='Hexbin Hover Demo' src='./public/hexbin_hover_demo.gif' width=500/>
 
 
 ### The Dashboard
 
 Click the group name or checkbox to **toggle** their presence.
 
-<img alt='Dashboard Toggle Demo' src='./public/dashboard_demo.gif' width=300/>
+<img alt='Dashboard Toggle Demo' src='./public/dashboard_demo.gif' width=500/>
 
 ---
 
