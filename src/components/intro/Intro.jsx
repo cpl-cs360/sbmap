@@ -21,7 +21,7 @@ export default function Intro() {
       </div>
       <div className='links'>
         <a href="https://github.com/cpl-cs360/sbmap" target='_blank' className='button'>Github</a>
-        <a href="https://github.com/cpl-cs360/sbmap#user-manual" target='_blank' className='button'>User Manual</a>
+        <a href="https://github.com/cpl-cs360/sbmap#readme" target='_blank' className='button'>User Manual</a>
         <a href="/sbmap/SBMAP.pdf" target='_blank' className='button'>Project Report</a>
       </div>
     </div>

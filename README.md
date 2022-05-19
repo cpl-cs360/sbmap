@@ -45,14 +45,23 @@ Click the group name or checkbox to **toggle** their presence.
 ### Installation
 
 1. Install and use the correct version of node using [NVM](https://github.com/nvm-sh/nvm)'s
-    `nvm install` and `nvm use`
+    ```sh
+    nvm install
+    # and
+    nvm use
+    ```
 
-2. Install dependencies
+2. Navigate to this project's directory
+    ```sh
+    cd path/to/sbmap
+    ```
+
+3. Install dependencies
     ```sh
     npm i
     ```
 
-3. Start the development server
+4. Start the development server
     ```sh
     npm run dev
     ```
