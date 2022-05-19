@@ -1,6 +1,7 @@
 import * as d3 from 'd3';
 
 // All keys of data that are strings must return a number
+// While this may not be the case for the entirity of the tabular data, it must be true for x, y, and z which we use below.
 type Data = {
     [key: string]: number;
 }
