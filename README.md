@@ -94,5 +94,5 @@ Click the group name or checkbox to **toggle** their presence.
 
 #### Dev Dependencies
 
-- [Typescript](https://www.typescriptlang.org)
+- [TypeScript](https://www.typescriptlang.org)
 - [Vite](https://vitejs.dev)
